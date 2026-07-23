@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recy Network | Whitepaper V2.5</title>
+    
+    <!-- New Fonts: Atkinson Hyperlegible (Titles) & Red Hat Display (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS with Typography Plugin -->
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // Enable dark mode toggling
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Red Hat Display"', 'sans-serif'],
+                        title: ['"Atkinson Hyperlegible"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#0f3823', 
+                        },
+                        ocean: {
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            900: '#0c2738',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        
+        /* Typography overrides */
+        .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+            font-family: 'Atkinson Hyperlegible', sans-serif;
+        }
+        
+        /* Clean Code Boxes (Light & Dark) */
+        .prose pre {
+            background-color: #f8fafc;
+            color: #334155;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            border-radius: 0.5rem;
+        }
+        .dark .prose pre {
+            background-color: #0f172a;
+            color: #cbd5e1;
+            border: 1px solid #1e293b;
+        }
+        .prose code {
+            font-weight: 500;
+        }
+        .prose table {
+            font-size: 0.875rem;
+        }
+        .prose th {
+            background-color: #f8fafc;
+        }
+        .dark .prose th {
+            background-color: #0f172a;
+            color: #e2e8f0;
+        }
+        .dark .prose td {
+            border-color: #1e293b;
+        }
+    </style>
+    
+    <!-- Dark Mode Init Script (Before body renders to prevent flash) -->
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 font-sans antialiased transition-colors duration-300">
+
+    <nav class="fixed w-full z-50 transition-all duration-300 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+        <div class="max-w-7x1 mx-auto px-40 sm:px-6 lg:px-15">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-fit-0 flex items-center">
+                    <a href="https://c.recy.life" class="block cursor-pointer hover:scale-105 hover:opacity-90 transition-all duration-200" aria-label="Visit Recy Network">
+                        <!-- Using the Detrash GitHub Org avatar as the official logo -->
+                        <img src="recy-whitepaper-lp\Assets\cRECY Logo VErde.png" alt="cRECY Logo" class="w-30 h-20 rounded-lg shadow-sm">
+                    </a>
+                </div>
+
+                <div class="flex items-center gap-4">
+                    <!-- Theme Toggle -->
+                    <button onclick="toggleTheme()" class="w-9 h-9 rounded-full flex items-center justify-center text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" aria-label="Toggle Dark Mode">
+                        <i class="fa-solid fa-moon dark:hidden"></i>
+                        <i class="fa-solid fa-sun hidden dark:block"></i>
+                    </button>
+
+                    <!-- Language Toggle -->
+                    <div class="flex items-center space-x-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-full border border-slate-200 dark:border-slate-700">
+                        <button onclick="setLanguage('en')" id="btn-en" class="px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 bg-white dark:bg-slate-700 shadow-sm text-brand-600 dark:text-brand-400">
+                            EN
+                        </button>
+                        <button onclick="setLanguage('pt')" id="btn-pt" class="px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-700/50">
+                            PT-BR
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="relative pt-24 pb-12 sm:pt-32 sm:pb-16 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-medium mb-6 transition-colors">
+                <i class="fa-solid fa-file-contract text-brand-500"></i>
+                <span id="hero-badge">Protocol Version V2.5</span>
+            </div>
+            
+            <h1 class="text-4xl sm:text-6xl font-bold tracking-tight text-slate-900 dark:text-white mb-6 font-title" id="hero-title">
+                RECY Whitepaper
+            </h1>
+            
+            <div class="flex justify-center gap-4 mt-8">
+                <a href="#whitepaper" class="px-8 py-3.5 rounded-full bg-brand-600 dark:bg-brand-500 text-white font-semibold shadow-lg hover:bg-brand-700 dark:hover:bg-brand-400 transition-all flex items-center gap-2" id="hero-cta">
+                    Read Whitepaper <i class="fa-solid fa-arrow-down"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div id="whitepaper" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden transition-colors">
+            
+            <!-- Document Header -->
+            <div class="border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 px-8 py-6 flex items-center justify-between transition-colors">
+                <div class="flex items-center gap-3">
+                    <i class="fa-solid fa-book-open text-brand-500 dark:text-brand-400 text-xl"></i>
+                    <div>
+                        <h2 class="font-bold text-slate-800 dark:text-slate-100 font-title" id="doc-title">Recy Network Whitepaper</h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Mainnet Celo • V2.5</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-8 sm:p-12">
+                <div id="content-en" class="prose prose-slate dark:prose-invert max-w-none">
+                    <h2>RECY Whitepaper</h2>
+                    <p>We must make our world safe from waste for the sake of our global economy and health. With over 300 million tons of trash already polluting nature and 14 million new tons entering ecosystems annually on average, the challenge is immense. Legacy methods remain focused on post-consumer cleanup rather than preventing waste pollution at its source.</p>
+                    <p>The Recy Network presents an open-source, public good, and market-based framework designed to make the transformation of the waste industry structurally profitable. Advanced blockchain architecture bridges the gap between physical waste logistics and decentralized finance (DeFi), establishing a fully verifiable, transparent, and sustainable global waste treatment economy.</p>
+
+                    <hr>
+
+                    <h2>2. CORE PROTOCOL ARCHITECTURE</h2>
+                    <p>The Recy Network operates as a high-performance execution layer deployed on the Celo blockchain, capitalizing on its carbon-negative footprint, low transactional friction, and mobile-first accessibility.</p>
+                    
+                    <h3>2.1 Native Traceability Reporting</h3>
+                    <p>The protocol partitions data tracking across four core smart contracts to log environmental telemetry directly on-chain:</p>
+                    <ul>
+                        <li><strong>Waste Generator Identification:</strong> Registers the public wallet address of the origin entity.</li>
+                        <li><strong>Sustainable Waste Treatment Agent Attribution:</strong> Validates the public wallet address of the receiving processing facility.</li>
+                        <li><strong>Material Categorization:</strong> Logs precise types and subtypes of waste collected.</li>
+                        <li><strong>Processing Classification:</strong> Records the precise sustainable treatment technique utilized.</li>
+                        <li><strong>Mass Metrics:</strong> Registers verified volumes measured in grams.</li>
+                        <li><strong>Output Telemetry:</strong> Tracks the raw materials or products generated from processing.</li>
+                        <li><strong>Disposal Auditing:</strong> Validates final disposal methodologies for any remaining non-recyclable fractions.</li>
+                    </ul>
+
+                    <h4>Protocol Smart Contract Registries (Celo Mainnet)</h4>
+                    <ul>
+                        <li><strong>Recy Report Factory Contract:</strong> <code>0x4423f3A81432F9bF43178AB60336F82DbB3171DA</code></li>
+                        <li><strong>Report Attributes Contract:</strong> <code>0xFF4b9bA19F1973A22F8D2847B85A26bF0878d5CA</code></li>
+                        <li><strong>Recy Report Svg Contract:</strong> <code>0xca5F41D24E7eCb633A162F15A0BcA0d8db4E0A75</code></li>
+                        <li><strong>Recy Report Data Contract:</strong> <code>0x62bAd9C9ca3672dAc340747E1F7958CEfEa3b27D</code></li>
+                        <li><strong>Recy Report Implementation Contract:</strong> <code>0xd9C75aa9e7226B05ed52263f60B37820Ef9129Be</code></li>
+                    </ul>
+
+                    <h3>2.2 Proxy Factory Security Model</h3>
+                    <p>To guarantee network isolation, the protocol deploys an automated factory that generates localized, sandboxed proxy smart contracts for individual clusters of waste treatment agents. This architecture prevents cascading systemic exploits, ensuring that localized oracle failures or operational compromises do not jeopardize the global network state.</p>
+
+                    <h3>2.3 The cRECY Manager Contract</h3>
+                    <p>The <code>cRECY Manager Contract</code> retains exclusive ownership of the underlying ERC-20 token contract. It represents the single valid state execution path capable of initiating token minting actions and regulating supply distributions based strictly on verified oracle inputs.</p>
+
+                    <h3>2.4 Multi-Asset Vault Architecture</h3>
+                    <p>Every verified Recy Report operates as an independent, smart-contract-hosted financial vault. These vaults are composable, allowing them to accumulate, hold, and distribute secondary yield tokens, stablecoins, or programmatic incentives native to the Celo ecosystem.</p>
+
+                    <h3>2.5 Programmatic Report Review Window</h3>
+                    <p>To decouple verification from human reliance and structurally eliminate collusion, all submitted documentation must undergo an invariant review window. Once an auditor submits an attestation, the report enters an escrow period during which network participants can challenge state updates via cryptographic proofs before any incentives are unlocked.</p>
+
+                    <h3>2.6 Ecosystem Participant Roles</h3>
+                    <ul>
+                        <li><strong>Waste Generators:</strong> Primary chain links responsible for committing intent-to-treat records and routing real-world waste inventory into sustainable channels.</li>
+                        <li><strong>Sustainable Waste Treatment Agents:</strong> Operational entities executing physical recovery, processing, and material upcycling. They submit cryptographic proof of physical work to the network.</li>
+                        <li><strong>Auditors:</strong> Independent validator nodes responsible for analyzing and executing state transitions on submitted reports.</li>
+                        <li><strong>Recy AI:</strong> Programmatic validation oracle layer executing automated cross-verification of auditing nodes, identifying operational discrepancies, and generating predictive recycling routing data.</li>
+                    </ul>
+
+                    <hr>
+
+                    <h2>3. THE SUPPLY-SQUEEZE TOKENOMICS</h2>
+                    <p>The native asset of the network is cRECY. It utilizes an absolute supply cap combined with a structural difficulty scalar modeled after Bitcoin's thermodynamic scarcity principles.</p>
+
+                    <h3>3.1 Protocol Smart Contract Deployments</h3>
+                    <ul>
+                        <li><strong>cRECY Token Contract (Celo):</strong> <code>0x34C11A932853Ae24E845Ad4B633E3cEf91afE583</code></li>
+                        <li><strong>cRECY Staking Contract (Celo):</strong> <code>0xCF1B48e2E7B4588b6673c4aB1855aFE71368e872</code></li>
+                        <li><strong>cRECY Locking Contract (Celo):</strong> <code>0x2b7d8711e26e78218791b85edb1ff4eff1a8bf54</code></li>
+                        <li><strong>Impact Investment Certificate Contract (Celo):</strong> <code>0xd574e0605c20fc683fedbdd01ce745ff2c1a6f40</code></li>
+                    </ul>
+
+                    <h3>3.2 Hard-Capped Minting Difficulty Curves</h3>
+                    <p>The maximum token supply is strictly limited to <strong>22,000,000 cRECY</strong>. Programmatic issuance scales downward inversely against cumulative network throughput.</p>
+
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Cumulative Minted cRECY</th>
+                                    <th>Difficulty Ratio (cRECY/kg)</th>
+                                    <th>Inverse Work (kg/cRECY)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>0 to 2,138,428</td><td>1.0000000</td><td>1.00</td></tr>
+                                <tr><td>2,138,429 to 3,528,409</td><td>0.5000000</td><td>2.00</td></tr>
+                                <tr><td>3,528,410 to 9,882,746</td><td>0.1000000</td><td>10.00</td></tr>
+                                <tr><td>9,882,747 to 12,775,426</td><td>0.0100000</td><td>100.00</td></tr>
+                                <tr><td>12,775,427 to 15,895,113</td><td>0.0001000</td><td>10,000.00</td></tr>
+                                <tr><td>15,895,114 to 22,000,000</td><td>0.0000028</td><td>355,198.29</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>3.3 Supply Allocation Matrix</h3>
+                    <pre><code>PROTOCOL EMISSION SPLIT
+-----------------------
+Waste Generators : 20%
+Treatment Agents : 60%
+Auditors / DAO   : 10% / 10%</code></pre>
+
+                    <hr>
+
+                    <h2>4. THE WASTE TRACEABILITY & CIRCULARITY CERTIFICATION FRAMEWORK</h2>
+                    <p>The demand-side engine of the Recy Network relies on commercial and corporate actors purchasing environmental validation. Instead of a volatile ecosystem layout, report utility is fixed to a standardized value-accrual pricing model.</p>
+
+                    <h3>4.1 Tiered Corporate Certificate Architecture</h3>
+                    <ul>
+                        <li><strong>Basic Traceability Certificate ($20 USDC):</strong> Single-point material routing validation mapping an individual waste stream from generator to treatment facility.</li>
+                        <li><strong>Standard Circularity Certificate ($100 USDC):</strong> Comprehensive tracking incorporating multi-stream material routing metrics and post-treatment upcycling outputs.</li>
+                        <li><strong>Enterprise ESG Compliance Certificate ($500 USDC):</strong> Full supply-chain audit paired with certified recycling logs, automated carbon footprint reductions, and auditor attestation entries.</li>
+                    </ul>
+
+                    <h3>4.2 Automated Market Value Capture</h3>
+                    <p>To directly compress market supply, all certificate revenue flows through an automated protocol router. Upon execution of a purchase, the smart contract routes the incoming USDC to native automated market makers (AMMs) on the Celo blockchain to execute a spot market buy of cRECY.</p>
+                    <pre><code>Tokens Bought = Certificate Price (USDC) / cRECY Market Price</code></pre>
+                    <p>These purchased tokens bypass open markets entirely and are routed straight into the protocol's active reward distribution infrastructure, ensuring that real-world compliance spending drives constant demand pressure on the cRECY spot price.</p>
+
+                    <hr>
+
+                    <h2>5. THE cRECY MILESTONE BONUS-BASED STAKING ENGINE</h2>
+                    <p>The protocol integrates a specialized milestone bonus-based framework within the <code>cRECY Staking Contract</code>. This engine focuses entirely on maximizing token retention and reducing tradeable float by offering a premium yield curve that outperforms competitive Layer-1 networks.</p>
+
+                    <h3>5.1 Non-Custodial Premium Yield Architecture</h3>
+                    <pre><code>22.0% MAXIMUM ANNUAL APY
+------------------------
+15.0% Liquid Base Yield (Accrues & claimable daily)
+ 7.0% Bonus Yield (Quarterly)</code></pre>
+                    <ul>
+                        <li><strong>Liquid Base Yield (15.0% APY):</strong> Accrues to the staking address programmatically every second. Capital remains fully unlocked and claimable at any time without penalty.</li>
+                        <li><strong>Quarterly Milestone Bonus (+7.0% Annualized APY equivalent):</strong> Paid out as a structural +1.75% flat cash reward calculated directly against the staked principal on exactly 90-day milestone occurrences. Unstaking at any point prior to a complete 90-day sequence automatically cancels the pending 1.75% milestone payout.</li>
+                    </ul>
+
+                    <h3>5.2 Algorithmic Yield Adjustment Framework</h3>
+                    <p>The target baseline yield adapts to market float conditions via the Unstaked Float Adjuster. This mechanism expands rewards up to the 22.0% maximum ceiling when circulating liquid supply is elevated:</p>
+                    <pre><code>Target APY = 8% + (14% × [Unstaked Tokens / Total Tokens])</code></pre>
+
+                    <hr>
+
+                    <h2>6. REVENUE ROUTING & TREASURY COUPLING</h2>
+
+                    <h3>6.1 Asymptotic Treasury Protection Loop</h3>
+                    <p>Detrash provides an initial reserve of 100,000 cRECY dedicated exclusively to funding staking shortfalls. The contract ensures infinite operational runway by scaling treasury emissions through an asymptotic decay filter:</p>
+                    <pre><code>Subsidy = MAX(0, Target APY - Real Yield) × (Remaining Treasury / 100,000)</code></pre>
+
+                    <h3>6.2 Elastic Capacity Calibration</h3>
+                    <p>Phase 1 restricts initial pool deposits to a conservative baseline capacity. To scale system boundaries concurrently with adoption metrics without diluting active stakers, the maximum allowable staked capacity recalculates programmatically:</p>
+                    <pre><code>Max Staked Capacity = MAX(300k, Annual Revenue (USDC) / (0.22 × Token Price))</code></pre>
+
+                    <hr>
+
+                    <h2>7. THE IMPACT INVESTMENT CERTIFICATE INTEGRATION</h2>
+                    <p>The peak layer of the protocol architecture links short-term staking directly to the pre-configured 2-year ecosystem locking framework.</p>
+
+                    <pre><code>THE STAKING INFRASTRUCTURE
+--------------------------
+Tier 1 [Seed]   : 30-Day Liquid Track
+Tier 2 [Growth] : 90-Day Milestone Track
+Tier 3 [Impact] : 730-Day Certificate Lock</code></pre>
+                    
+                    <ol>
+                        <li><strong>Locker Interoperability:</strong> Stakers who commit capital directly to the 730-day corporate locking contract are automatically flagged by the staking reward distributor engine.</li>
+                        <li><strong>Staking Passport:</strong> The non-transferable ESG Certificate NFT unlocks maximum time-weighted yield weights and core DAO governance voting power.</li>
+                        <li><strong>Supply Lock Stabilization:</strong> Long-duration structural locking from institutional actors removes significant fractions of the circulating asset pool from the tradeable open float.</li>
+                    </ol>
+                </div>
+
+                <div id="content-pt" class="prose prose-slate dark:prose-invert max-w-none hidden">
+                    <h2>RECY Whitepaper</h2>
+                    <p>Precisamos proteger o nosso mundo dos resíduos para o bem da nossa economia global e da nossa saúde. Com mais de 300 milhões de toneladas de lixo já poluindo a natureza e 14 milhões de novas toneladas entrando nos ecossistemas anualmente, em média, o desafio é imenso. Os métodos tradicionais permanecem focados na limpeza pós-consumo, em vez de evitar a poluição por resíduos diretamente na fonte.</p>
+                    <p>A Rede Recy apresenta uma estrutura de mercado aberta e de bem público projetada para tornar a transformação da indústria de resíduos estruturalmente lucrativa. A arquitetura blockchain avançada conecta a logística física de resíduos às finanças descentralizadas (DeFi), estabelecendo uma economia global de tratamento de resíduos totalmente verificável, transparente e sustentável.</p>
+
+                    <hr>
+
+                    <h2>2. ARQUITETURA CENTRAL DO PROTOCOLO</h2>
+                    <p>A Rede Recy opera como uma camada de execução de alta performance implantada na blockchain Celo, aproveitando sua pegada de carbono negativa, baixa fricção transacional e acessibilidade focada em dispositivos móveis.</p>
+                    
+                    <h3>2.1 Relatórios Nativos de Rastreabilidade</h3>
+                    <p>O protocolo divide o rastreamento de dados em quatro contratos inteligentes principais para registrar a telemetria ambiental diretamente on-chain:</p>
+                    <ul>
+                        <li><strong>Identificação do Gerador de Resíduos:</strong> Registra o endereço de carteira pública da entidade de origem.</li>
+                        <li><strong>Atribuição do Agente de Tratamento Sustentável:</strong> Valida o endereço de carteira pública da instalação de processamento receptora.</li>
+                        <li><strong>Categorização de Materiais:</strong> Registra os tipos e subtipos exatos de resíduos coletados.</li>
+                        <li><strong>Classificação de Processamento:</strong> Registra a técnica exata de tratamento sustentável utilizada.</li>
+                        <li><strong>Métricas de Massa:</strong> Registra os volumes verificados expressos em gramas.</li>
+                        <li><strong>Telemetria de Saída (Output):</strong> Rastreia as matérias-primas ou produtos gerados a partir do processamento.</li>
+                        <li><strong>Auditoria de Descarte:</strong> Valida as metodologias de descarte final para quaisquer frações restantes não recicláveis.</li>
+                    </ul>
+
+                    <h4>Registros de Contratos Inteligentes do Protocolo (Celo Mainnet)</h4>
+                    <ul>
+                        <li><strong>Recy Report Factory Contract:</strong> <code>0x4423f3A81432F9bF43178AB60336F82DbB3171DA</code></li>
+                        <li><strong>Report Attributes Contract:</strong> <code>0xFF4b9bA19F1973A22F8D2847B85A26bF0878d5CA</code></li>
+                        <li><strong>Recy Report Svg Contract:</strong> <code>0xca5F41D24E7eCb633A162F15A0BcA0d8db4E0A75</code></li>
+                        <li><strong>Recy Report Data Contract:</strong> <code>0x62bAd9C9ca3672dAc340747E1F7958CEfEa3b27D</code></li>
+                        <li><strong>Recy Report Implementation Contract:</strong> <code>0xd9C75aa9e7226B05ed52263f60B37820Ef9129Be</code></li>
+                    </ul>
+
+                    <h3>2.2 Modelo de Segurança Proxy Factory</h3>
+                    <p>Para garantir o isolamento da rede, o protocolo implanta uma fábrica automatizada que gera contratos inteligentes proxy localizados e isolados para grupos específicos de agentes de tratamento de resíduos. Essa arquitetura evita falhas sistêmicas em cascata.</p>
+
+                    <h3>2.3 O Contrato cRECY Manager</h3>
+                    <p>O <code>Contrato cRECY Manager</code> retém a propriedade exclusiva do contrato do token ERC-20 subjacente. Ele representa o único caminho de execução de estado válido capaz de iniciar ações de cunhagem (minting) de tokens.</p>
+
+                    <h3>2.4 Arquitetura de Cofres Multi-Ativos</h3>
+                    <p>Cada Relatório Recy verificado opera como um cofre financeiro independente. Esses cofres permitem que acumulem, guardem e distribuam tokens de rendimento secundários, stablecoins ou incentivos nativos do ecossistema Celo.</p>
+
+                    <h3>2.5 Janela Programática de Revisão de Relatórios</h3>
+                    <p>Para desvincular a verificação da dependência humana, assim que um auditor envia uma atestação, o relatório entra em um período de custódia (escrow) no qual os participantes da rede podem contestar as atualizações de estado antes que quaisquer incentivos sejam liberados.</p>
+
+                    <h3>2.6 Papéis dos Participantes do Ecossistema</h3>
+                    <ul>
+                        <li><strong>Geradores de Resíduos:</strong> Elos primários da cadeia, responsáveis por registrar as intenções de tratamento.</li>
+                        <li><strong>Agentes de Tratamento Sustentável:</strong> Entidades operacionais que executam a coleta física e o processamento de materiais.</li>
+                        <li><strong>Auditores:</strong> Nós validadores independentes, responsáveis por analisar as transições de estado.</li>
+                        <li><strong>Recy AI:</strong> Camada de oráculo programática que executa a verificação cruzada automatizada dos nós de auditoria.</li>
+                    </ul>
+
+                    <hr>
+
+                    <h2>3. TOKENOMICS DE COMPRESSÃO DE OFERTA (SUPPLY-SQUEEZE)</h2>
+                    <p>O ativo nativo da rede é o cRECY. Ele utiliza um teto máximo de suprimento combinado com um escalar de dificuldade estrutural modelado a partir dos princípios de escassez termodinâmica do Bitcoin.</p>
+
+                    <h3>3.1 Implantações de Contratos Inteligentes do Protocolo</h3>
+                    <ul>
+                        <li><strong>Contrato do Token cRECY:</strong> <code>0x34C11A932853Ae24E845Ad4B633E3cEf91afE583</code></li>
+                        <li><strong>Contrato de Staking do cRECY:</strong> <code>0xCF1B48e2E7B4588b6673c4aB1855aFE71368e872</code></li>
+                        <li><strong>Contrato de Bloqueio do cRECY:</strong> <code>0x2b7d8711e26e78218791b85edb1ff4eff1a8bf54</code></li>
+                        <li><strong>Contrato do Certificado de Investimento:</strong> <code>0xd574e0605c20fc683fedbdd01ce745ff2c1a6f40</code></li>
+                    </ul>
+
+                    <h3>3.2 Curvas de Dificuldade de Cunhagem (Hard-Cap)</h3>
+                    <p>O suprimento máximo de tokens é estritamente limitado a <strong>22.000.000 cRECY</strong>. A emissão programática diminui inversamente em relação ao volume total de processamento da rede.</p>
+
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>cRECY Cunhado Acumulado</th>
+                                    <th>Taxa de Dificuldade (cRECY/kg)</th>
+                                    <th>Trabalho Inverso (kg/cRECY)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>0 a 2.138.428</td><td>1,0000000</td><td>1,00</td></tr>
+                                <tr><td>2.138.429 a 3.528.409</td><td>0,5000000</td><td>2,00</td></tr>
+                                <tr><td>3.528.410 a 9.882.746</td><td>0,1000000</td><td>10,00</td></tr>
+                                <tr><td>9.882.747 a 12.775.426</td><td>0,0100000</td><td>100,00</td></tr>
+                                <tr><td>12.775.427 a 15.895.113</td><td>0,0001000</td><td>10.000,00</td></tr>
+                                <tr><td>15.895.114 a 22.000.000</td><td>0,0000028</td><td>355.198,29</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>3.3 Matriz de Alocação de Suprimento</h3>
+                    <pre><code>DIVISÃO DE EMISSÃO DO PROTOCOLO
+-------------------------------
+Geradores de Resíduos : 20%
+Agentes de Tratamento : 60%
+Auditores / DAO       : 10% / 10%</code></pre>
+
+                    <hr>
+
+                    <h2>4. A ESTRUTURA DE CERTIFICAÇÃO DE CIRCULARIDADE E RASTREABILIDADE</h2>
+                    <p>O motor pelo lado da demanda da Rede Recy depende de atores comerciais e corporativos que compram validações ambientais. A utilidade dos relatórios é fixada em um modelo padronizado de acumulação de valor.</p>
+
+                    <h3>4.1 Arquitetura de Certificados Corporativos em Camadas</h3>
+                    <ul>
+                        <li><strong>Certificado de Rastreabilidade Básica ($20 USDC):</strong> Validação de roteamento de material em ponto único, mapeando um fluxo de resíduos individual.</li>
+                        <li><strong>Certificado de Circularidade Padrão ($100 USDC):</strong> Rastreamento abrangente incorporando métricas de roteamento multifluxo e volumes de transformação.</li>
+                        <li><strong>Certificado de Conformidade ESG Corporativa ($500 USDC):</strong> Auditoria completa da cadeia de suprimentos corporativa combinada com registros de reciclagem.</li>
+                    </ul>
+
+                    <h3>4.2 Captura Automatizada de Valor de Mercado</h3>
+                    <p>Toda a receita dos certificados flui através de um roteador automatizado. Na execução de uma compra, o contrato inteligente direciona o USDC para formadores de mercado (AMMs) na blockchain Celo para executar a compra a mercado (spot) de cRECY.</p>
+                    <pre><code>Tokens Comprados = Preço do Certificado (USDC) / Preço de Mercado do cRECY</code></pre>
+
+                    <hr>
+
+                    <h2>5. O MOTOR DE STAKING BASEADO EM BÔNUS POR MARCOS DO cRECY</h2>
+                    <p>O protocolo integra uma estrutura especializada de bônus por marcos dentro do <code>Contrato de Staking do cRECY</code>. Este motor foca inteiramente em maximizar a retenção de tokens e reduzir o suprimento líquido circulante.</p>
+
+                    <h3>5.1 Arquitetura de Rendimento Premium Não-Custodial</h3>
+                    <pre><code>RENDIMENTO ANUAL MÁXIMO DE 22,0%
+--------------------------------
+15,0% Rendimento Base Líquido (Acumula diariamente)
+ 7,0% Bônus Trimestral</code></pre>
+                    <ul>
+                        <li><strong>Rendimento Base Líquido (15,0% APY):</strong> Acumula no endereço de staking programaticamente a cada segundo. O capital permanece totalmente desbloqueado e resgatável a qualquer momento.</li>
+                        <li><strong>Bônus Trimestral por Marcos (+7,0% APY equivalente):</strong> Pago como uma recompensa estrutural de +1,75% fixo calculado diretamente sobre o principal ao atingir marcos de 90 dias. Retirar o valor antes cancela o pagamento pendente.</li>
+                    </ul>
+
+                    <h3>5.2 Estrutura Algorítmica de Ajuste de Rendimento</h3>
+                    <p>O rendimento base alvo se adapta às condições de flutuação do mercado através do Ajustador de Flutuação Não-Staked:</p>
+                    <pre><code>APY Alvo = 8% + (14% × [Tokens Não-Staked / Total de Tokens])</code></pre>
+
+                    <hr>
+
+                    <h2>6. ROTEAMENTO DE RECEITA E ACOPLAMENTO DE TESOURARIA</h2>
+
+                    <h3>6.1 Fluxo de Proteção Assintótica da Tesouraria</h3>
+                    <p>A Detrash fornece uma reserva inicial de 100.000 cRECY dedicada a cobrir déficits de staking. O contrato garante uma operação contínua ao escalonar as emissões através de um filtro de decaimento assintótico:</p>
+                    <pre><code>Subsídio = MÁX(0, APY Alvo - Rendimento Real) × (Tesouraria Restante / 100.000)</code></pre>
+
+                    <h3>6.2 Calibração de Capacidade Elástica</h3>
+                    <p>A Fase 1 restringe os depósitos iniciais do pool. Para expandir as fronteiras simultaneamente com as métricas de adoção, a capacidade máxima de staking é recalculada:</p>
+                    <pre><code>Capacidade Máxima = MÁX(300k, Receita Anual (USDC) / (0,22 × Preço do Token))</code></pre>
+
+                    <hr>
+
+                    <h2>7. INTEGRAÇÃO DO CERTIFICADO DE INVESTIMENTO DE IMPACTO</h2>
+                    <p>A camada superior vincula o staking de curto prazo diretamente à estrutura de bloqueio ecossistêmico de 2 anos.</p>
+
+                    <pre><code>A INFRAESTRUTURA DE STAKING
+---------------------------
+Tier 1 [Seed]   : Trilha Líquida (30 Dias)
+Tier 2 [Growth] : Trilha de Marcos (90 Dias)
+Tier 3 [Impact] : Certificado de 730 Dias</code></pre>
+                    
+                    <ol>
+                        <li><strong>Interoperabilidade de Bloqueio:</strong> Os stakers no contrato corporativo de 730 dias são automaticamente identificados pelo motor de distribuição.</li>
+                        <li><strong>Passaporte de Staking:</strong> O NFT de Certificado ESG não transferível libera os pesos máximos de rendimento e o poder de voto na governança da DAO.</li>
+                        <li><strong>Estabilização pelo Bloqueio de Oferta:</strong> O bloqueio de longa duração remove frações significativas do pool circulante do mercado aberto.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-slate-100 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 mt-20 text-slate-500 dark:text-slate-400 py-12 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center">
+                <a href="https://c.recy.life" class="block cursor-pointer hover:scale-105 hover:opacity-90 transition-all duration-200" aria-label="Visit Recy Network">
+                    <img src="https://github.com/detrash.png" alt="Recy Logo" class="w-10 h-10 rounded-lg shadow-sm">
+                </a>
+            </div>
+            <p class="text-sm">Built by Detrash. Designed for the planet.</p>
+            <div class="flex gap-4">
+                <a href="#" class="hover:text-slate-900 dark:hover:text-white transition-colors"><i class="fa-brands fa-github text-xl"></i></a>
+                <a href="#" class="hover:text-slate-900 dark:hover:text-white transition-colors"><i class="fa-brands fa-twitter text-xl"></i></a>
+                <a href="#" class="hover:text-slate-900 dark:hover:text-white transition-colors"><i class="fa-brands fa-discord text-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Dark Mode Logic
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            if (document.documentElement.classList.contains('dark')) {
+                localStorage.theme = 'dark';
+            } else {
+                localStorage.theme = 'light';
+            }
+        }
+
+        // Language Toggle Logic
+        const contentEn = document.getElementById('content-en');
+        const contentPt = document.getElementById('content-pt');
+        const btnEn = document.getElementById('btn-en');
+        const btnPt = document.getElementById('btn-pt');
+        
+        // UI Elements for localization
+        const heroBadge = document.getElementById('hero-badge');
+        const heroTitle = document.getElementById('hero-title');
+        const heroCta = document.getElementById('hero-cta');
+        const docTitle = document.getElementById('doc-title');
+
+        const strings = {
+            en: {
+                badge: "Protocol Version V2.5",
+                title: 'RECY Whitepaper',
+                cta: 'Read Whitepaper <i class="fa-solid fa-arrow-down"></i>',
+                doc: "Recy Network Whitepaper"
+            },
+            pt: {
+                badge: "Versão do Protocolo V2.5",
+                title: 'RECY Whitepaper',
+                cta: 'Ler Whitepaper <i class="fa-solid fa-arrow-down"></i>',
+                doc: "Whitepaper da Rede Recy"
+            }
+        };
+
+        function setLanguage(lang) {
+            // Update Active Buttons styles with Dark Mode compatibility
+            const activeClass = "px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 bg-white dark:bg-slate-700 shadow-sm text-brand-600 dark:text-brand-400";
+            const inactiveClass = "px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-700/50";
+
+            if(lang === 'en') {
+                btnEn.className = activeClass;
+                btnPt.className = inactiveClass;
+                contentEn.classList.remove('hidden');
+                contentPt.classList.add('hidden');
+            } else {
+                btnPt.className = activeClass;
+                btnEn.className = inactiveClass;
+                contentPt.classList.remove('hidden');
+                contentEn.classList.add('hidden');
+            }
+
+            // Update UI Strings
+            heroBadge.innerHTML = strings[lang].badge;
+            heroTitle.innerHTML = strings[lang].title;
+            heroCta.innerHTML = strings[lang].cta;
+            docTitle.innerHTML = strings[lang].doc;
+        }
+    </script>
+</body>
+</html>
