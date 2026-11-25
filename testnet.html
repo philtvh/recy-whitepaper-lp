@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recy Network | Testnet Contracts (Celo Sepolia)</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Red Hat Display"', 'sans-serif'],
+                        title: ['"Atkinson Hyperlegible"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#0f3823',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+    </style>
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 font-sans antialiased transition-colors duration-300">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 transition-all duration-300 bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 gap-4">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="https://c.recy.life" class="block cursor-pointer hover:scale-105 hover:opacity-90 transition-all duration-200" aria-label="Visit Recy Network">
+                        <img src="Assets/logo.png" alt="cRECY Logo" class="h-10 w-auto rounded-lg shadow-sm">
+                    </a>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-1 bg-slate-100/80 dark:bg-slate-800/80 p-1 rounded-full border border-slate-200 dark:border-slate-700">
+                    <a href="index.html" id="nav-wpp" class="px-4 py-1.5 rounded-full text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all">Whitepaper</a>
+                    <a href="testnet.html" id="nav-testnet" class="px-4 py-1.5 rounded-full text-sm font-semibold bg-white dark:bg-slate-700 text-brand-600 dark:text-brand-400 shadow-sm transition-all">Testnet</a>
+                    <a href="former-versions.html" id="nav-former" class="px-4 py-1.5 rounded-full text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all">Former Versions</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <button onclick="toggleTheme()" class="w-9 h-9 rounded-full flex items-center justify-center text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" aria-label="Toggle Dark Mode">
+                        <i class="fa-solid fa-moon dark:hidden"></i>
+                        <i class="fa-solid fa-sun hidden dark:block"></i>
+                    </button>
+                    <div class="flex items-center space-x-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-full border border-slate-200 dark:border-slate-700">
+                        <button onclick="setLanguage('en')" id="btn-en" class="px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 bg-white dark:bg-slate-700 shadow-sm text-brand-600 dark:text-brand-400">EN</button>
+                        <button onclick="setLanguage('pt')" id="btn-pt" class="px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200">PT-BR</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex md:hidden justify-center gap-2 pb-3">
+                <a href="index.html" id="m-nav-wpp" class="px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">Whitepaper</a>
+                <a href="testnet.html" id="m-nav-testnet" class="px-3 py-1 rounded-full text-xs font-semibold bg-brand-600 text-white">Testnet</a>
+                <a href="former-versions.html" id="m-nav-former" class="px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">Former Versions</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <div class="relative pt-32 pb-8 sm:pt-36 sm:pb-12">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-800 text-amber-700 dark:text-amber-300 text-sm font-medium mb-6">
+                <i class="fa-solid fa-flask"></i>
+                <span id="hero-badge">Staging &amp; Sandbox • Celo Sepolia</span>
+            </div>
+            <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-slate-900 dark:text-white mb-4 font-title" id="hero-title">
+                Testnet Smart Contracts
+            </h1>
+            <p class="max-w-2xl mx-auto text-slate-600 dark:text-slate-400 text-base sm:text-lg" id="hero-desc">
+                Active Recy Network protocol contracts deployed on the Celo Sepolia Testnet (Chain ID 11142220) for developer integration, QA, and partner onboarding. Testnet tokens carry no real-world economic value.
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 space-y-8">
+
+        <!-- Network Parameters Card -->
+        <section class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg shadow-slate-200/40 dark:shadow-none border border-slate-200/80 dark:border-slate-800 p-6 sm:p-8">
+            <h2 class="text-lg font-bold font-title text-slate-900 dark:text-white mb-4 flex items-center gap-2" id="net-title">
+                <i class="fa-solid fa-network-wired text-brand-500"></i> Network Configuration
+            </h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-sm">
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60">
+                    <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold mb-1" id="lbl-network">Network</div>
+                    <div class="font-bold text-slate-900 dark:text-white">Celo Sepolia Testnet</div>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60">
+                    <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold mb-1">Chain ID</div>
+                    <div class="font-mono font-bold text-slate-900 dark:text-white">11142220</div>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60">
+                    <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold mb-1">RPC Endpoint</div>
+                    <div class="font-mono text-xs text-slate-800 dark:text-slate-200 break-all">https://forno.celo-sepolia.celo-testnet.org</div>
+                </div>
+                <div class="p-4 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60">
+                    <div class="text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 font-semibold mb-1" id="lbl-faucet">Faucet &amp; Explorer</div>
+                    <div class="flex flex-wrap gap-3 mt-1">
+                        <a href="https://faucet.celo.org/celo-sepolia" target="_blank" rel="noopener noreferrer" class="text-brand-600 dark:text-brand-400 font-semibold hover:underline">Faucet <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></a>
+                        <a href="https://celo-sepolia.blockscout.com" target="_blank" rel="noopener noreferrer" class="text-brand-600 dark:text-brand-400 font-semibold hover:underline">Blockscout <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contracts Table Card -->
+        <section class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg shadow-slate-200/40 dark:shadow-none border border-slate-200/80 dark:border-slate-800 overflow-hidden">
+            <div class="px-6 sm:px-8 py-5 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 flex flex-wrap items-center justify-between gap-3">
+                <div>
+                    <h2 class="text-xl font-bold font-title text-slate-900 dark:text-white" id="table-title">Celo Sepolia Deployment Manifest</h2>
+                    <p class="text-xs text-slate-500 dark:text-slate-400 font-mono mt-0.5">recy-11142220.json • Chain ID 11142220</p>
+                </div>
+                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-amber-100 dark:bg-amber-900/40 text-amber-800 dark:text-amber-300 border border-amber-300/40">
+                    Testnet Only
+                </span>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr class="border-b border-slate-200 dark:border-slate-800 text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 bg-slate-50/80 dark:bg-slate-900/60">
+                            <th class="py-3.5 px-6 font-semibold" id="th-contract">Contract</th>
+                            <th class="py-3.5 px-4 font-semibold" id="th-category">Category</th>
+                            <th class="py-3.5 px-4 font-semibold" id="th-address">Address</th>
+                            <th class="py-3.5 px-6 font-semibold text-right" id="th-explorer">Explorers</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contracts-tbody" class="divide-y divide-slate-100 dark:divide-slate-800 text-sm"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Deployer Metadata -->
+        <section class="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 px-6 sm:px-8 py-5 flex flex-wrap items-center justify-between gap-4 text-sm">
+            <div>
+                <span class="font-semibold text-slate-700 dark:text-slate-300" id="lbl-deployer">Testnet Deployer:</span>
+                <code class="ml-2 font-mono text-xs sm:text-sm text-slate-600 dark:text-slate-400 break-all">0x8D58a01f0Ef9E041CC293Af3E0822513fA1e068B</code>
+            </div>
+            <a href="https://celo-sepolia.blockscout.com/address/0x8D58a01f0Ef9E041CC293Af3E0822513fA1e068B" target="_blank" rel="noopener noreferrer" class="text-brand-600 dark:text-brand-400 font-semibold hover:underline flex items-center gap-1.5">
+                Blockscout <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+            </a>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-100 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 mt-12 text-slate-500 dark:text-slate-400 py-12 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-4">
+                <a href="https://c.recy.life" class="block cursor-pointer hover:scale-105 hover:opacity-90 transition-all duration-200" aria-label="Visit Recy Network">
+                    <img src="https://github.com/detrash.png" alt="Recy Logo" class="w-10 h-10 rounded-lg shadow-sm">
+                </a>
+                <div class="flex gap-4 text-sm font-medium">
+                    <a href="index.html" class="hover:text-brand-600 dark:hover:text-brand-400 transition-colors" id="f-nav-wpp">Whitepaper</a>
+                    <a href="testnet.html" class="hover:text-brand-600 dark:hover:text-brand-400 transition-colors" id="f-nav-testnet">Testnet</a>
+                    <a href="former-versions.html" class="hover:text-brand-600 dark:hover:text-brand-400 transition-colors" id="f-nav-former">Former Versions</a>
+                </div>
+            </div>
+            <p class="text-sm">Built by Detrash. Designed for the planet.</p>
+            <div class="flex gap-4">
+                <a href="https://github.com/detrash" target="_blank" rel="noopener noreferrer" class="hover:text-slate-900 dark:hover:text-white transition-colors" aria-label="GitHub"><i class="fa-brands fa-github text-xl"></i></a>
+                <a href="https://x.com/detrashglobal" target="_blank" rel="noopener noreferrer" class="hover:text-slate-900 dark:hover:text-white transition-colors" aria-label="X / Twitter"><i class="fa-brands fa-twitter text-xl"></i><
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+        }
+
+        const testnetContracts = [
+            { name: "cRECYToken", catEn: "Tokenomics", catPt: "Tokenomics", address: "0xAEdE51b3493037546fAC090dF99D897abdef9b65", type: "token" },
+            { name: "cRECYStaking", catEn: "Tokenomics", catPt: "Tokenomics", address: "0x431D35FA8E41207Dfb8B13f1C7d67a61F70Aa2DD", type: "address" },
+            { name: "cRECYLocking", catEn: "Tokenomics", catPt: "Tokenomics", address: "0x316970350AcA45176040e687e391530ce922a339", type: "address" },
+            { name: "RecyDistribution", catEn: "Tokenomics", catPt: "Tokenomics", address: "0xe949248B8310780f2B2869deCE04C2d7C1a92B06", type: "address" },
+            { name: "ImpactInvestmentCertificate", catEn: "Certificates", catPt: "Certificados", address: "0x5D978fce70Bc093d483e21ACB5F85333862dc7Fe", type: "address" },
+            { name: "RecyReportFactory", catEn: "Protocol Core", catPt: "Núcleo do Protocolo", address: "0xc9Fb52e7eDBA245aBeb9Cbee3e603aF10A44BBd0", type: "address" },
+            { name: "GenesisRecyReportProxy", catEn: "Protocol Core", catPt: "Núcleo do Protocolo", address: "0xf2CA0F67557819ce67591a96AEcEE4964c61284a", type: "address" },
+            { name: "RecyReportImplementation", catEn: "Protocol Core", catPt: "Núcleo do Protocolo", address: "0x4E4eCA26d37d819bf51aD3EFe1799f8ea4A80314", type: "address" },
+            { name: "RecyReportAttributes", catEn: "Protocol Core", catPt: "Núcleo do Protocolo", address: "0x610A260c35939D736C4149A275552cbd9ECcd90B", type: "address" },
+            { name: "RecyReportSvg", catEn: "Protocol Core", catPt: "Núcleo do Protocolo", address: "0xFcbabe30FE06Fe7D0aBf014949135292a84E656B", type: "address" },
+            { name: "RecyReportData", catEn: "Protocol Core", catPt: "Núcleo do Protocolo", address: "0x64Fc6411cBc9477628cf19eb774BFa0589604DCb", type: "address" }
+        ];
+
+        function copyAddr(btn, addr) {
+            navigator.clipboard.writeText(addr).then(() => {
+                const icon = btn.querySelector('i');
+                icon.className = 'fa-solid fa-check text-brand-500';
+                setTimeout(() => { icon.className = 'fa-regular fa-copy'; }, 1500);
+            });
+        }
+
+        function renderTable(lang) {
+            const tbody = document.getElementById('contracts-tbody');
+            tbody.innerHTML = testnetContracts.map(c => {
+                const blockscoutPath = c.type === 'token' ? 'token' : 'address';
+                const blockscoutUrl = `https://celo-sepolia.blockscout.com/${blockscoutPath}/${c.address}`;
+                const celoscanUrl = `https://sepolia.celoscan.io/${blockscoutPath}/${c.address}`;
+                const cat = lang === 'pt' ? c.catPt : c.catEn;
+                return `
+                    <tr class="hover:bg-slate-50/70 dark:hover:bg-slate-800/40 transition-colors">
+                        <td class="py-4 px-6 font-semibold text-slate-900 dark:text-white whitespace-nowrap">${c.name}</td>
+                        <td class="py-4 px-4 whitespace-nowrap">
+                            <span class="inline-flex px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">${cat}</span>
+                        </td>
+                        <td class="py-4 px-4">
+                            <div class="flex items-center gap-2">
+                                <code class="font-mono text-xs text-slate-700 dark:text-slate-300 break-all">${c.address}</code>
+                                <button onclick="copyAddr(this, '${c.address}')" class="p-1.5 rounded-md text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex-shrink-0" title="Copy address">
+                                    <i class="fa-regular fa-copy"></i>
+                                </button>
+                            </div>
+                        </td>
+                        <td class="py-4 px-6 text-right whitespace-nowrap space-x-3">
+                            <a href="${blockscoutUrl}" target="_blank" rel="noopener noreferrer" class="text-brand-600 dark:text-brand-400 hover:underline font-semibold text-xs">
+                                Blockscout <i class="fa-solid fa-arrow-up-right-from-square ml-0.5"></i>
+                            </a>
+                            <a href="${celoscanUrl}" target="_blank" rel="noopener noreferrer" class="text-slate-500 dark:text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:underline font-semibold text-xs">
+                                Celoscan <i class="fa-solid fa-arrow-up-right-from-square ml-0.5"></i>
+                            </a>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        const strings = {
+            en: {
+                badge: "Staging & Sandbox • Celo Sepolia",
+                title: "Testnet Smart Contracts",
+                desc: "Active Recy Network protocol contracts deployed on the Celo Sepolia Testnet (Chain ID 11142220) for developer integration, QA, and partner onboarding. Testnet tokens carry no real-world economic value.",
+                netTitle: '<i class="fa-solid fa-network-wired text-brand-500"></i> Network Configuration',
+                lblNetwork: "Network",
+                lblFaucet: "Faucet & Explorer",
+                tableTitle: "Celo Sepolia Deployment Manifest",
+                thContract: "Contract",
+                thCategory: "Category",
+                thAddress: "Address",
+                thExplorer: "Explorers",
+                lblDeployer: "Testnet Deployer:",
+                navWpp: "Whitepaper",
+                navTestnet: "Testnet",
+                navFormer: "Former Versions"
+            },
+            pt: {
+                badge: "Homologação & Sandbox • Celo Sepolia",
+                title: "Contratos Inteligentes da Testnet",
+                desc: "Contratos ativos do protocolo Rede Recy implantados na Celo Sepolia Testnet (Chain ID 11142220) para integração de desenvolvedores, QA e homologação de parceiros. Tokens de testnet não possuem valor econômico real.",
+                netTitle: '<i class="fa-solid fa-network-wired text-brand-500"></i> Configuração da Rede',
+                lblNetwork: "Rede",
+                lblFaucet: "Faucet e Explorador",
+                tableTitle: "Manifesto de Implantação Celo Sepolia",
+                thContract: "Contrato",
+                thCategory: "Categoria",
+                thAddress: "Endereço",
+                thExplorer: "Exploradores",
+                lblDeployer: "Deployer da Testnet:",
+                navWpp: "Whitepaper",
+                navTestnet: "Testnet",
+                navFormer: "Versões Anteriores"
+            }
+        };
+
+        function setLanguage(lang) {
+            localStorage.lang = lang;
+            const activeClass = "px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 bg-white dark:bg-slate-700 shadow-sm text-brand-600 dark:text-brand-400";
+            const inactiveClass = "px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200";
+            const isEn = lang === 'en';
+            document.getElementById('btn-en').className = isEn ? activeClass : inactiveClass;
+            document.getElementById('btn-pt').className = isEn ? inactiveClass : activeClass;
+
+            const t = strings[lang];
+            document.getElementById('hero-badge').textContent = t.badge;
+            document.getElementById('hero-title').textContent = t.title;
+            document.getElementById('hero-desc').textContent = t.desc;
+            document.getElementById('net-title').innerHTML = t.netTitle;
+            document.getElementById('lbl-network').textContent = t.lblNetwork;
+            document.getElementById('lbl-faucet').textContent = t.lblFaucet;
+            document.getElementById('table-title').textContent = t.tableTitle;
+            document.getElementById('th-contract').textContent = t.thContract;
+            document.getElementById('th-category').textContent = t.thCategory;
+            document.getElementById('th-address').textContent = t.thAddress;
+            document.getElementById('th-explorer').textContent = t.thExplorer;
+            document.getElementById('lbl-deployer').textContent = t.lblDeployer;
+
+            ['nav-wpp', 'm-nav-wpp', 'f-nav-wpp'].forEach(id => document.getElementById(id).textContent = t.navWpp);
+            ['nav-testnet', 'm-nav-testnet', 'f-nav-testnet'].forEach(id => document.getElementById(id).textContent = t.navTestnet);
+            ['nav-former', 'm-nav-former', 'f-nav-former'].forEach(id => document.getElementById(id).textContent = t.navFormer);
+
+            renderTable(lang);
+        }
+
+        setLanguage(localStorage.lang === 'pt' ? 'pt' : 'en');
+    </script>
+</body>
+</html>

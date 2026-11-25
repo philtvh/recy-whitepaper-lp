@@ -4,21 +4,21 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recy Network | Whitepaper V2.5</title>
-    
-    <!-- New Fonts: Atkinson Hyperlegible (Titles) & Red Hat Display (Body) -->
+    <title>Recy Network | Whitepaper V2.5 (Ethereum Mainnet)</title>
+
+    <!-- Fonts: Atkinson Hyperlegible (Titles) & Red Hat Display (Body) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-    
+
     <!-- Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- Tailwind CSS with Typography Plugin -->
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <script>
         tailwind.config = {
-            darkMode: 'class', // Enable dark mode toggling
+            darkMode: 'class',
             theme: {
                 extend: {
                     fontFamily: {
@@ -29,11 +29,12 @@
                         brand: {
                             50: '#f0fdf4',
                             100: '#dcfce7',
+                            400: '#4ade80',
                             500: '#22c55e',
                             600: '#16a34a',
                             700: '#15803d',
                             800: '#166534',
-                            900: '#0f3823', 
+                            900: '#0f3823',
                         },
                         ocean: {
                             500: '#0ea5e9',
@@ -46,19 +47,15 @@
         }
     </script>
     <style>
-        /* Custom scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
         .dark ::-webkit-scrollbar-thumb { background: #475569; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-        
-        /* Typography overrides */
+
         .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
             font-family: 'Atkinson Hyperlegible', sans-serif;
         }
-        
-        /* Clean Code Boxes (Light & Dark) */
         .prose pre {
             background-color: #f8fafc;
             color: #334155;
@@ -71,25 +68,23 @@
             color: #cbd5e1;
             border: 1px solid #1e293b;
         }
-        .prose code {
-            font-weight: 500;
+        .prose code { font-weight: 500; word-break: break-all; }
+        .prose table { font-size: 0.875rem; }
+        .prose th { background-color: #f8fafc; }
+        .dark .prose th { background-color: #0f172a; color: #e2e8f0; }
+        .dark .prose td { border-color: #1e293b; }
+        .prose a.contract-link {
+            color: #16a34a;
+            text-decoration: none;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.85em;
+            word-break: break-all;
         }
-        .prose table {
-            font-size: 0.875rem;
-        }
-        .prose th {
-            background-color: #f8fafc;
-        }
-        .dark .prose th {
-            background-color: #0f172a;
-            color: #e2e8f0;
-        }
-        .dark .prose td {
-            border-color: #1e293b;
-        }
+        .dark .prose a.contract-link { color: #4ade80; }
+        .prose a.contract-link:hover { text-decoration: underline; }
     </style>
-    
-    <!-- Dark Mode Init Script (Before body renders to prevent flash) -->
+
+    <!-- Dark Mode Init Script -->
     <script>
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
@@ -100,18 +95,32 @@
 </head>
 <body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 font-sans antialiased transition-colors duration-300">
 
-    <nav class="fixed w-full z-50 transition-all duration-300 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
-        <div class="max-w-7x1 mx-auto px-40 sm:px-6 lg:px-15">
-            <div class="flex justify-between items-center h-16">
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 transition-all duration-300 bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 gap-4">
                 <!-- Logo -->
-                <div class="flex-fit-0 flex items-center">
+                <div class="flex-shrink-0 flex items-center">
                     <a href="https://c.recy.life" class="block cursor-pointer hover:scale-105 hover:opacity-90 transition-all duration-200" aria-label="Visit Recy Network">
-                        <!-- Using the Detrash GitHub Org avatar as the official logo -->
-                        <img src="Assets\logo.png" alt="cRECY Logo" class="w-50 h-40 rounded-lg shadow-sm">
+                        <img src="Assets/logo.png" alt="cRECY Logo" class="h-10 w-auto rounded-lg shadow-sm">
                     </a>
                 </div>
 
-                <div class="flex items-center gap-4">
+                <!-- Page Navigation (Desktop) -->
+                <div class="hidden md:flex items-center space-x-1 bg-slate-100/80 dark:bg-slate-800/80 p-1 rounded-full border border-slate-200 dark:border-slate-700">
+                    <a href="index.html" id="nav-wpp" class="px-4 py-1.5 rounded-full text-sm font-semibold bg-white dark:bg-slate-700 text-brand-600 dark:text-brand-400 shadow-sm transition-all">
+                        Whitepaper
+                    </a>
+                    <a href="testnet.html" id="nav-testnet" class="px-4 py-1.5 rounded-full text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all">
+                        Testnet
+                    </a>
+                    <a href="former-versions.html" id="nav-former" class="px-4 py-1.5 rounded-full text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all">
+                        Former Versions
+                    </a>
+                </div>
+
+                <!-- Controls -->
+                <div class="flex items-center gap-3">
                     <!-- Theme Toggle -->
                     <button onclick="toggleTheme()" class="w-9 h-9 rounded-full flex items-center justify-center text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" aria-label="Toggle Dark Mode">
                         <i class="fa-solid fa-moon dark:hidden"></i>
@@ -120,64 +129,84 @@
 
                     <!-- Language Toggle -->
                     <div class="flex items-center space-x-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-full border border-slate-200 dark:border-slate-700">
-                        <button onclick="setLanguage('en')" id="btn-en" class="px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 bg-white dark:bg-slate-700 shadow-sm text-brand-600 dark:text-brand-400">
+                        <button onclick="setLanguage('en')" id="btn-en" class="px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 bg-white dark:bg-slate-700 shadow-sm text-brand-600 dark:text-brand-400">
                             EN
                         </button>
-                        <button onclick="setLanguage('pt')" id="btn-pt" class="px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-700/50">
+                        <button onclick="setLanguage('pt')" id="btn-pt" class="px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200">
                             PT-BR
                         </button>
                     </div>
                 </div>
             </div>
+
+            <!-- Mobile Navigation -->
+            <div class="flex md:hidden justify-center gap-2 pb-3">
+                <a href="index.html" id="m-nav-wpp" class="px-3 py-1 rounded-full text-xs font-semibold bg-brand-600 text-white">Whitepaper</a>
+                <a href="testnet.html" id="m-nav-testnet" class="px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">Testnet</a>
+                <a href="former-versions.html" id="m-nav-former" class="px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">Former Versions</a>
+            </div>
         </div>
     </nav>
 
-    <div class="relative pt-24 pb-12 sm:pt-32 sm:pb-16 overflow-hidden">
+    <!-- Hero -->
+    <div class="relative pt-32 pb-12 sm:pt-36 sm:pb-16 overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
-            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-medium mb-6 transition-colors">
-                <i class="fa-solid fa-file-contract text-brand-500"></i>
-                <span id="hero-badge">Protocol Version V2.5</span>
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-medium mb-6 transition-colors">
+                <i class="fa-brands fa-ethereum text-brand-500"></i>
+                <span id="hero-badge">Protocol Version V2.5 • Ethereum Mainnet</span>
             </div>
-            
+
             <h1 class="text-4xl sm:text-6xl font-bold tracking-tight text-slate-900 dark:text-white mb-6 font-title" id="hero-title">
                 RECY Whitepaper
             </h1>
-            
-            <div class="flex justify-center gap-4 mt-8">
-                <a href="#whitepaper" class="px-8 py-3.5 rounded-full bg-brand-600 dark:bg-brand-500 text-white font-semibold shadow-lg hover:bg-brand-700 dark:hover:bg-brand-400 transition-all flex items-center gap-2" id="hero-cta">
+
+            <div class="flex flex-wrap justify-center gap-3 mt-8">
+                <a href="#whitepaper" class="px-7 py-3 rounded-full bg-brand-600 dark:bg-brand-500 text-white font-semibold shadow-lg hover:bg-brand-700 dark:hover:bg-brand-400 transition-all flex items-center gap-2" id="hero-cta">
                     Read Whitepaper <i class="fa-solid fa-arrow-down"></i>
+                </a>
+                <a href="testnet.html" class="px-6 py-3 rounded-full bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 font-semibold hover:border-brand-500 transition-all flex items-center gap-2" id="hero-testnet-cta">
+                    <i class="fa-solid fa-flask text-brand-500"></i> Celo Sepolia Testnet
+                </a>
+                <a href="former-versions.html" class="px-6 py-3 rounded-full bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 font-semibold hover:border-brand-500 transition-all flex items-center gap-2" id="hero-former-cta">
+                    <i class="fa-solid fa-clock-rotate-left text-slate-400"></i> Former Versions
                 </a>
             </div>
         </div>
     </div>
 
-    <div id="whitepaper" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <!-- Main Document Card -->
+    <div id="whitepaper" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="bg-white dark:bg-slate-900 rounded-2xl shadow-xl shadow-slate-200/50 dark:shadow-none border border-slate-100 dark:border-slate-800 overflow-hidden transition-colors">
-            
+
             <!-- Document Header -->
-            <div class="border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 px-8 py-6 flex items-center justify-between transition-colors">
+            <div class="border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/50 px-8 py-6 flex flex-wrap items-center justify-between gap-4 transition-colors">
                 <div class="flex items-center gap-3">
                     <i class="fa-solid fa-book-open text-brand-500 dark:text-brand-400 text-xl"></i>
                     <div>
                         <h2 class="font-bold text-slate-800 dark:text-slate-100 font-title" id="doc-title">Recy Network Whitepaper</h2>
-                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">Mainnet Celo • V2.5</p>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium" id="doc-subtitle">Ethereum Mainnet (Chain ID: 1) • V2.5</p>
                     </div>
                 </div>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-brand-100 dark:bg-brand-900/50 text-brand-700 dark:text-brand-400 border border-brand-500/20">
+                    <span class="w-2 h-2 rounded-full bg-brand-500"></span>
+                    <span id="status-badge">Live on Ethereum</span>
+                </span>
             </div>
 
             <div class="p-8 sm:p-12">
+                <!-- ENGLISH CONTENT -->
                 <div id="content-en" class="prose prose-slate dark:prose-invert max-w-none">
-                    <h2>RECY Whitepaper</h2>
+                    <h2>1. RECY WHITEPAPER</h2>
                     <p>We must make our world safe from waste for the sake of our global economy and health. With over 300 million tons of trash already polluting nature and 14 million new tons entering ecosystems annually on average, the challenge is immense. Legacy methods remain focused on post-consumer cleanup rather than preventing waste pollution at its source.</p>
                     <p>The Recy Network presents an open-source, public good, and market-based framework designed to make the transformation of the waste industry structurally profitable. Advanced blockchain architecture bridges the gap between physical waste logistics and decentralized finance (DeFi), establishing a fully verifiable, transparent, and sustainable global waste treatment economy.</p>
 
                     <hr>
 
                     <h2>2. CORE PROTOCOL ARCHITECTURE</h2>
-                    <p>The Recy Network operates as a high-performance execution layer deployed on the Celo blockchain, capitalizing on its carbon-negative footprint, low transactional friction, and mobile-first accessibility.</p>
-                    
+                    <p>The Recy Network operates as a high-integrity execution layer migrated to and deployed on <strong>Ethereum Mainnet (Chain ID: 1)</strong>, leveraging Ethereum's institutional-grade security, deep decentralized liquidity (Uniswap V4), and global settlement finality. For testing environments and historical deployments, see the <a href="testnet.html">Celo Sepolia Testnet Registry</a> and the <a href="former-versions.html">Former Versions Archive</a>.</p>
+
                     <h3>2.1 Native Traceability Reporting</h3>
-                    <p>The protocol partitions data tracking across four core smart contracts to log environmental telemetry directly on-chain:</p>
+                    <p>The protocol partitions data tracking across modular core smart contracts to log environmental telemetry directly on-chain:</p>
                     <ul>
                         <li><strong>Waste Generator Identification:</strong> Registers the public wallet address of the origin entity.</li>
                         <li><strong>Sustainable Waste Treatment Agent Attribution:</strong> Validates the public wallet address of the receiving processing facility.</li>
@@ -188,32 +217,24 @@
                         <li><strong>Disposal Auditing:</strong> Validates final disposal methodologies for any remaining non-recyclable fractions.</li>
                     </ul>
 
-                    <h4>Protocol Smart Contract Registries (Celo Mainnet)</h4>
+                    <h4>Protocol Smart Contract Registries (Ethereum Mainnet — Chain ID 1)</h4>
                     <ul>
-                        <li><strong>Recy Report Factory Contract:</strong> <code>0x4423f3A81432F9bF43178AB60336F82DbB3171DA</code></li>
-                        <li><strong>Report Attributes Contract:</strong> <code>0xFF4b9bA19F1973A22F8D2847B85A26bF0878d5CA</code></li>
-                        <li><strong>Recy Report Svg Contract:</strong> <code>0xca5F41D24E7eCb633A162F15A0BcA0d8db4E0A75</code></li>
-                        <li><strong>Recy Report Data Contract:</strong> <code>0x62bAd9C9ca3672dAc340747E1F7958CEfEa3b27D</code></li>
-                        <li><strong>Recy Report Implementation Contract:</strong> <code>0xd9C75aa9e7226B05ed52263f60B37820Ef9129Be</code></li>
-                    </ul>
-
-                     <h4>Protocol Smart Contract Registries (Celo Sepolia Testnet)</h4>
-                     <ul>
-                        <li><strong>Recy Report Factory Contract:</strong> <code>0xFF4b9bA19F1973A22F8D2847B85A26bF0878d5CA</code></li>
-                        <li><strong>Report Attributes Contract:</strong> <code>0x610A260c35939D736C4149A275552cbd9ECcd90B</code></li>
-                        <li><strong>Recy Report Svg Contract:</strong> <code>0xFcbabe30FE06Fe7D0aBf014949135292a84E656B</code></li>
-                        <li><strong>Recy Report Data Contract:</strong> <code>0x64Fc6411cBc9477628cf19eb774BFa0589604DCb</code></li>
-                        <li><strong>Recy Report Implementation Contract:</strong> <code>0x411e80f0Bb6cFce57caa28279F478a8018Fa1F46</code></li>
+                        <li><strong>Recy Report Factory:</strong> <a class="contract-link" href="https://etherscan.io/address/0x4423f3A81432F9bF43178AB60336F82DbB3171DA" target="_blank" rel="noopener noreferrer">0x4423f3A81432F9bF43178AB60336F82DbB3171DA</a></li>
+                        <li><strong>Genesis Recy Report Proxy:</strong> <a class="contract-link" href="https://etherscan.io/address/0x597886502Ed0E544CA56926f35F5EC2BAa6e87Ae" target="_blank" rel="noopener noreferrer">0x597886502Ed0E544CA56926f35F5EC2BAa6e87Ae</a></li>
+                        <li><strong>Recy Report Implementation:</strong> <a class="contract-link" href="https://etherscan.io/address/0xd9C75aa9e7226B05ed52263f60B37820Ef9129Be" target="_blank" rel="noopener noreferrer">0xd9C75aa9e7226B05ed52263f60B37820Ef9129Be</a></li>
+                        <li><strong>Recy Report Attributes:</strong> <a class="contract-link" href="https://etherscan.io/address/0xca5F41D24E7eCb633A162F15A0BcA0d8db4E0A75" target="_blank" rel="noopener noreferrer">0xca5F41D24E7eCb633A162F15A0BcA0d8db4E0A75</a></li>
+                        <li><strong>Recy Report SVG:</strong> <a class="contract-link" href="https://etherscan.io/address/0x62bAd9C9ca3672dAc340747E1F7958CEfEa3b27D" target="_blank" rel="noopener noreferrer">0x62bAd9C9ca3672dAc340747E1F7958CEfEa3b27D</a></li>
+                        <li><strong>Recy Report Data:</strong> <a class="contract-link" href="https://etherscan.io/address/0x68E3470c1cE1329B0B2d038421008c94a21b45dD" target="_blank" rel="noopener noreferrer">0x68E3470c1cE1329B0B2d038421008c94a21b45dD</a></li>
                     </ul>
 
                     <h3>2.2 Proxy Factory Security Model</h3>
                     <p>To guarantee network isolation, the protocol deploys an automated factory that generates localized, sandboxed proxy smart contracts for individual clusters of waste treatment agents. This architecture prevents cascading systemic exploits, ensuring that localized oracle failures or operational compromises do not jeopardize the global network state.</p>
 
-                    <h3>2.3 The cRECY Manager Contract</h3>
-                    <p>The <code>cRECY Manager Contract</code> retains exclusive ownership of the underlying ERC-20 token contract. It represents the single valid state execution path capable of initiating token minting actions and regulating supply distributions based strictly on verified oracle inputs.</p>
+                    <h3>2.3 Distribution &amp; Emission Control</h3>
+                    <p>The <code>RecyDistribution</code> contract governs emission routing and coordinates minting privileges over the underlying ERC-20 <code>cRECY</code> token contract, ensuring supply distributions execute strictly from verified reporting and protocol state transitions.</p>
 
                     <h3>2.4 Multi-Asset Vault Architecture</h3>
-                    <p>Every verified Recy Report operates as an independent, smart-contract-hosted financial vault. These vaults are composable, allowing them to accumulate, hold, and distribute secondary yield tokens, stablecoins, or programmatic incentives native to the Celo ecosystem.</p>
+                    <p>Every verified Recy Report operates as an independent, smart-contract-hosted financial vault. These vaults are composable, allowing them to accumulate, hold, and distribute secondary yield tokens, stablecoins (USDC), or programmatic incentives native to the Ethereum ecosystem.</p>
 
                     <h3>2.5 Programmatic Report Review Window</h3>
                     <p>To decouple verification from human reliance and structurally eliminate collusion, all submitted documentation must undergo an invariant review window. Once an auditor submits an attestation, the report enters an escrow period during which network participants can challenge state updates via cryptographic proofs before any incentives are unlocked.</p>
@@ -229,14 +250,30 @@
                     <hr>
 
                     <h2>3. THE SUPPLY-SQUEEZE TOKENOMICS</h2>
-                    <p>The native asset of the network is cRECY. It utilizes an absolute supply cap combined with a structural difficulty scalar modeled after Bitcoin's thermodynamic scarcity principles.</p>
+                    <p>The native asset of the network is <strong>cRECY</strong>. It utilizes an absolute supply cap combined with a structural difficulty scalar modeled after Bitcoin's thermodynamic scarcity principles. Upon migration to Ethereum Mainnet, the genesis migrated supply was initialized at exactly <strong>484,891.69691 cRECY</strong> (<code>484891696910000000000000</code> wei) preserving 1:1 parity with historical circulating balances.</p>
 
-                    <h3>3.1 Protocol Smart Contract Deployments</h3>
+                    <h3>3.1 Tokenomics, Certificates &amp; Liquidity Deployments (Ethereum Mainnet)</h3>
                     <ul>
-                        <li><strong>cRECY Token Contract (Celo):</strong> <code>0x34C11A932853Ae24E845Ad4B633E3cEf91afE583</code></li>
-                        <li><strong>cRECY Staking Contract (Celo):</strong> <code>0xCF1B48e2E7B4588b6673c4aB1855aFE71368e872</code></li>
-                        <li><strong>cRECY Locking Contract (Celo):</strong> <code>0x2b7d8711e26e78218791b85edb1ff4eff1a8bf54</code></li>
-                        <li><strong>Impact Investment Certificate Contract (Celo):</strong> <code>0xd574e0605c20fc683fedbdd01ce745ff2c1a6f40</code></li>
+                        <li><strong>cRECY Token (ERC-20):</strong> <a class="contract-link" href="https://etherscan.io/token/0x48568467c9eD0898B006B7d24f628b78106B94A5" target="_blank" rel="noopener noreferrer">0x48568467c9eD0898B006B7d24f628b78106B94A5</a></li>
+                        <li><strong>cRECY Staking:</strong> <a class="contract-link" href="https://etherscan.io/address/0x852441B3Fbdfb9f3d42999F703a62b873936926b" target="_blank" rel="noopener noreferrer">0x852441B3Fbdfb9f3d42999F703a62b873936926b</a></li>
+                        <li><strong>cRECY Locking (TimeLock):</strong> <a class="contract-link" href="https://etherscan.io/address/0xc31031bFe4DDF1d6F9e60FE0334AbB0f4198dB18" target="_blank" rel="noopener noreferrer">0xc31031bFe4DDF1d6F9e60FE0334AbB0f4198dB18</a></li>
+                        <li><strong>Recy Distribution:</strong> <a class="contract-link" href="https://etherscan.io/address/0x6626EE0125f8912FccEF31d12378694349751717" target="_blank" rel="noopener noreferrer">0x6626EE0125f8912FccEF31d12378694349751717</a></li>
+                        <li><strong>Impact Investment Certificate:</strong> <a class="contract-link" href="https://etherscan.io/address/0x7Ae647a60A5cB69a2075bfF44187d2cfe9cc0e70" target="_blank" rel="noopener noreferrer">0x7Ae647a60A5cB69a2075bfF44187d2cfe9cc0e70</a></li>
+                        <li><strong>Waste Traceability Certificate (Proxy):</strong> <a class="contract-link" href="https://etherscan.io/address/0xB7A182edFA8cAA2463D5abCAD1DFF4CC752645B6" target="_blank" rel="noopener noreferrer">0xB7A182edFA8cAA2463D5abCAD1DFF4CC752645B6</a></li>
+                        <li><strong>Waste Traceability Certificate (Implementation):</strong> <a class="contract-link" href="https://etherscan.io/address/0xcF3447DB09319E0FE378A1db2BFa74265345c4c5" target="_blank" rel="noopener noreferrer">0xcF3447DB09319E0FE378A1db2BFa74265345c4c5</a></li>
+                        <li><strong>Recy Uniswap V4 Swap Adapter:</strong> <a class="contract-link" href="https://etherscan.io/address/0xc5e9F929b0EFCBef5805F8e2B49D76A3c8A9249b" target="_blank" rel="noopener noreferrer">0xc5e9F929b0EFCBef5805F8e2B49D76A3c8A9249b</a></li>
+                        <li><strong>Detrash Direct OTC Desk:</strong> <a class="contract-link" href="https://etherscan.io/address/0x43D29dAA7ac44bcd762DbC7c683c57BfdbbCFC6B" target="_blank" rel="noopener noreferrer">0x43D29dAA7ac44bcd762DbC7c683c57BfdbbCFC6B</a></li>
+                    </ul>
+
+                    <h4>Governance Multisigs &amp; External Infrastructure (Ethereum Mainnet)</h4>
+                    <ul>
+                        <li><strong>Protocol Governance Safe:</strong> <a class="contract-link" href="https://etherscan.io/address/0xC33B034E3847CEeFa5989a13af5bd611daFF6D1b" target="_blank" rel="noopener noreferrer">0xC33B034E3847CEeFa5989a13af5bd611daFF6D1b</a></li>
+                        <li><strong>Detrash Treasury &amp; Admin Safe:</strong> <a class="contract-link" href="https://etherscan.io/address/0x1EF3a7ba64f313a9b32A2B1519250E6C1D476356" target="_blank" rel="noopener noreferrer">0x1EF3a7ba64f313a9b32A2B1519250E6C1D476356</a></li>
+                        <li><strong>Uniswap V4 Pool ID (cRECY / USDC):</strong> <code>0x7aa99be0e16ef96782c8f69dfffaec424392aa76bea3076dcfe147d375ad11f3</code></li>
+                        <li><strong>Uniswap V4 PoolManager:</strong> <a class="contract-link" href="https://etherscan.io/address/0x000000000004444c5dc75cB358380D2e3dE08A90" target="_blank" rel="noopener noreferrer">0x000000000004444c5dc75cB358380D2e3dE08A90</a></li>
+                        <li><strong>Uniswap V4 PositionManager:</strong> <a class="contract-link" href="https://etherscan.io/address/0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e" target="_blank" rel="noopener noreferrer">0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e</a></li>
+                        <li><strong>Permit2:</strong> <a class="contract-link" href="https://etherscan.io/address/0x000000000022D473030F116dDEE9F6B43aC78BA3" target="_blank" rel="noopener noreferrer">0x000000000022D473030F116dDEE9F6B43aC78BA3</a></li>
+                        <li><strong>Settlement Asset (USDC):</strong> <a class="contract-link" href="https://etherscan.io/token/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48" target="_blank" rel="noopener noreferrer">0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48</a></li>
                     </ul>
 
                     <h3>3.2 Hard-Capped Minting Difficulty Curves</h3>
@@ -272,7 +309,7 @@ Detrash          : 10%</code></pre>
 
                     <hr>
 
-                    <h2>4. THE WASTE TRACEABILITY & CIRCULARITY CERTIFICATION FRAMEWORK</h2>
+                    <h2>4. THE WASTE TRACEABILITY &amp; CIRCULARITY CERTIFICATION FRAMEWORK</h2>
                     <p>The demand-side engine of the Recy Network relies on commercial and corporate actors purchasing environmental validation. Instead of a volatile ecosystem layout, report utility is fixed to a standardized value-accrual pricing model.</p>
 
                     <h3>4.1 Tiered Corporate Certificate Architecture</h3>
@@ -283,7 +320,7 @@ Detrash          : 10%</code></pre>
                     </ul>
 
                     <h3>4.2 Automated Market Value Capture</h3>
-                    <p>To directly compress market supply, all certificate revenue flows through an automated protocol router. Upon execution of a purchase, the smart contract routes the incoming USDC to native automated market makers (AMMs) on the Celo blockchain to execute a spot market buy of cRECY.</p>
+                    <p>To directly compress market supply, all certificate revenue flows through the automated protocol router (<code>RecyV4SwapAdapter</code>). Upon execution of a purchase, the smart contract routes incoming USDC to the native <strong>Uniswap V4</strong> cRECY/USDC pool on Ethereum Mainnet to execute a spot market buy of cRECY.</p>
                     <pre><code>Tokens Bought = Certificate Price (USDC) / cRECY Market Price</code></pre>
                     <p>These purchased tokens bypass open markets entirely and are routed straight into the protocol's active reward distribution infrastructure, ensuring that real-world compliance spending drives constant demand pressure on the cRECY spot price.</p>
 
@@ -295,11 +332,11 @@ Detrash          : 10%</code></pre>
                     <h3>5.1 Non-Custodial Premium Yield Architecture</h3>
                     <pre><code>22.0% MAXIMUM ANNUAL APY
 ------------------------
-15.0% Liquid Base Yield (Accrues & claimable daily)
+15.0% Liquid Base Yield (Accrues &amp; claimable daily)
  7.0% Bonus Yield (Quarterly)</code></pre>
                     <ul>
                         <li><strong>Liquid Base Yield (15.0% APY):</strong> Accrues to the staking address programmatically every second. Capital remains fully unlocked and claimable at any time without penalty.</li>
-                        <li><strong>Quarterly Milestone Bonus (+7.0% Annualized APY equivalent):</strong> Paid out as a structural +1.75% flat cash reward calculated directly against the staked principal on exactly 90-day milestone occurrences. Unstaking at any point prior to a complete 90-day sequence automatically cancels the pending 1.75% milestone payout.</li>
+                        <li><strong>Quarterly Milestone Bonus (+7.0% Annualized APY equivalent):</strong> Paid out as a structural +1.75% flat reward calculated directly against the staked principal on exactly 90-day milestone occurrences. Unstaking at any point prior to a complete 90-day sequence automatically cancels the pending 1.75% milestone payout.</li>
                     </ul>
 
                     <h3>5.2 Algorithmic Yield Adjustment Framework</h3>
@@ -308,7 +345,7 @@ Detrash          : 10%</code></pre>
 
                     <hr>
 
-                    <h2>6. REVENUE ROUTING & TREASURY COUPLING</h2>
+                    <h2>6. REVENUE ROUTING &amp; TREASURY COUPLING</h2>
 
                     <h3>6.1 Asymptotic Treasury Protection Loop</h3>
                     <p>Detrash provides an initial reserve of 100,000 cRECY dedicated exclusively to funding staking shortfalls. The contract ensures infinite operational runway by scaling treasury emissions through an asymptotic decay filter:</p>
@@ -328,24 +365,25 @@ Detrash          : 10%</code></pre>
 Tier 1 [Seed]   : 30-Day Liquid Track
 Tier 2 [Growth] : 90-Day Milestone Track
 Tier 3 [Impact] : 730-Day Certificate Lock</code></pre>
-                    
+
                     <ol>
                         <li><strong>Supply Lock Stabilization:</strong> Long-duration structural locking from institutional actors removes significant fractions of the circulating asset pool from the tradeable open float.</li>
                     </ol>
                 </div>
 
+                <!-- PORTUGUESE CONTENT -->
                 <div id="content-pt" class="prose prose-slate dark:prose-invert max-w-none hidden">
-                    <h2>RECY Whitepaper</h2>
+                    <h2>1. RECY WHITEPAPER</h2>
                     <p>Precisamos proteger o nosso mundo dos resíduos para o bem da nossa economia global e da nossa saúde. Com mais de 300 milhões de toneladas de lixo já poluindo a natureza e 14 milhões de novas toneladas entrando nos ecossistemas anualmente, em média, o desafio é imenso. Os métodos tradicionais permanecem focados na limpeza pós-consumo, em vez de evitar a poluição por resíduos diretamente na fonte.</p>
                     <p>A Rede Recy apresenta uma estrutura de mercado aberta e de bem público projetada para tornar a transformação da indústria de resíduos estruturalmente lucrativa. A arquitetura blockchain avançada conecta a logística física de resíduos às finanças descentralizadas (DeFi), estabelecendo uma economia global de tratamento de resíduos totalmente verificável, transparente e sustentável.</p>
 
                     <hr>
 
                     <h2>2. ARQUITETURA CENTRAL DO PROTOCOLO</h2>
-                    <p>A Rede Recy opera como uma camada de execução de alta performance implantada na blockchain Celo, aproveitando sua pegada de carbono negativa, baixa fricção transacional e acessibilidade focada em dispositivos móveis.</p>
-                    
+                    <p>A Rede Recy opera como uma camada de execução de alta integridade migrada e implantada na <strong>Ethereum Mainnet (Chain ID: 1)</strong>, aproveitando sua segurança de nível institucional, liquidez descentralizada profunda (Uniswap V4) e finalidade global de liquidação. Para ambientes de teste e implantações históricas, consulte o <a href="testnet.html">Registro da Testnet Celo Sepolia</a> e o <a href="former-versions.html">Arquivo de Versões Anteriores</a>.</p>
+
                     <h3>2.1 Relatórios Nativos de Rastreabilidade</h3>
-                    <p>O protocolo divide o rastreamento de dados em quatro contratos inteligentes principais para registrar a telemetria ambiental diretamente on-chain:</p>
+                    <p>O protocolo particiona o rastreamento de dados em contratos inteligentes modulares para registrar a telemetria ambiental diretamente on-chain:</p>
                     <ul>
                         <li><strong>Identificação do Gerador de Resíduos:</strong> Registra o endereço de carteira pública da entidade de origem.</li>
                         <li><strong>Atribuição do Agente de Tratamento Sustentável:</strong> Valida o endereço de carteira pública da instalação de processamento receptora.</li>
@@ -356,23 +394,24 @@ Tier 3 [Impact] : 730-Day Certificate Lock</code></pre>
                         <li><strong>Auditoria de Descarte:</strong> Valida as metodologias de descarte final para quaisquer frações restantes não recicláveis.</li>
                     </ul>
 
-                    <h4>Registros de Contratos Inteligentes do Protocolo (Celo Mainnet)</h4>
+                    <h4>Registros de Contratos Inteligentes do Protocolo (Ethereum Mainnet — Chain ID 1)</h4>
                     <ul>
-                        <li><strong>Recy Report Factory Contract:</strong> <code>0x4423f3A81432F9bF43178AB60336F82DbB3171DA</code></li>
-                        <li><strong>Report Attributes Contract:</strong> <code>0xFF4b9bA19F1973A22F8D2847B85A26bF0878d5CA</code></li>
-                        <li><strong>Recy Report Svg Contract:</strong> <code>0xca5F41D24E7eCb633A162F15A0BcA0d8db4E0A75</code></li>
-                        <li><strong>Recy Report Data Contract:</strong> <code>0x62bAd9C9ca3672dAc340747E1F7958CEfEa3b27D</code></li>
-                        <li><strong>Recy Report Implementation Contract:</strong> <code>0xd9C75aa9e7226B05ed52263f60B37820Ef9129Be</code></li>
+                        <li><strong>Recy Report Factory:</strong> <a class="contract-link" href="https://etherscan.io/address/0x4423f3A81432F9bF43178AB60336F82DbB3171DA" target="_blank" rel="noopener noreferrer">0x4423f3A81432F9bF43178AB60336F82DbB3171DA</a></li>
+                        <li><strong>Genesis Recy Report Proxy:</strong> <a class="contract-link" href="https://etherscan.io/address/0x597886502Ed0E544CA56926f35F5EC2BAa6e87Ae" target="_blank" rel="noopener noreferrer">0x597886502Ed0E544CA56926f35F5EC2BAa6e87Ae</a></li>
+                        <li><strong>Recy Report Implementation:</strong> <a class="contract-link" href="https://etherscan.io/address/0xd9C75aa9e7226B05ed52263f60B37820Ef9129Be" target="_blank" rel="noopener noreferrer">0xd9C75aa9e7226B05ed52263f60B37820Ef9129Be</a></li>
+                        <li><strong>Recy Report Attributes:</strong> <a class="contract-link" href="https://etherscan.io/address/0xca5F41D24E7eCb633A162F15A0BcA0d8db4E0A75" target="_blank" rel="noopener noreferrer">0xca5F41D24E7eCb633A162F15A0BcA0d8db4E0A75</a></li>
+                        <li><strong>Recy Report SVG:</strong> <a class="contract-link" href="https://etherscan.io/address/0x62bAd9C9ca3672dAc340747E1F7958CEfEa3b27D" target="_blank" rel="noopener noreferrer">0x62bAd9C9ca3672dAc340747E1F7958CEfEa3b27D</a></li>
+                        <li><strong>Recy Report Data:</strong> <a class="contract-link" href="https://etherscan.io/address/0x68E3470c1cE1329B0B2d038421008c94a21b45dD" target="_blank" rel="noopener noreferrer">0x68E3470c1cE1329B0B2d038421008c94a21b45dD</a></li>
                     </ul>
 
                     <h3>2.2 Modelo de Segurança Proxy Factory</h3>
                     <p>Para garantir o isolamento da rede, o protocolo implanta uma fábrica automatizada que gera contratos inteligentes proxy localizados e isolados para grupos específicos de agentes de tratamento de resíduos. Essa arquitetura evita falhas sistêmicas em cascata.</p>
 
-                    <h3>2.3 O Contrato cRECY Manager</h3>
-                    <p>O <code>Contrato cRECY Manager</code> retém a propriedade exclusiva do contrato do token ERC-20 subjacente. Ele representa o único caminho de execução de estado válido capaz de iniciar ações de cunhagem (minting) de tokens.</p>
+                    <h3>2.3 Controle de Emissão e Distribuição</h3>
+                    <p>O contrato <code>RecyDistribution</code> governa o roteamento de emissões e coordena os privilégios de cunhagem (minting) sobre o contrato do token ERC-20 <code>cRECY</code>, garantindo que as distribuições ocorram estritamente a partir de relatórios verificados e transições válidas do protocolo.</p>
 
                     <h3>2.4 Arquitetura de Cofres Multi-Ativos</h3>
-                    <p>Cada Relatório Recy verificado opera como um cofre financeiro independente. Esses cofres permitem que acumulem, guardem e distribuam tokens de rendimento secundários, stablecoins ou incentivos nativos do ecossistema Celo.</p>
+                    <p>Cada Relatório Recy verificado opera como um cofre financeiro independente. Esses cofres permitem acumular, guardar e distribuir tokens de rendimento secundários, stablecoins (USDC) ou incentivos nativos do ecossistema Ethereum.</p>
 
                     <h3>2.5 Janela Programática de Revisão de Relatórios</h3>
                     <p>Para desvincular a verificação da dependência humana, assim que um auditor envia uma atestação, o relatório entra em um período de custódia (escrow) no qual os participantes da rede podem contestar as atualizações de estado antes que quaisquer incentivos sejam liberados.</p>
@@ -388,14 +427,30 @@ Tier 3 [Impact] : 730-Day Certificate Lock</code></pre>
                     <hr>
 
                     <h2>3. TOKENOMICS DE COMPRESSÃO DE OFERTA (SUPPLY-SQUEEZE)</h2>
-                    <p>O ativo nativo da rede é o cRECY. Ele utiliza um teto máximo de suprimento combinado com um escalar de dificuldade estrutural modelado a partir dos princípios de escassez termodinâmica do Bitcoin.</p>
+                    <p>O ativo nativo da rede é o <strong>cRECY</strong>. Ele utiliza um teto máximo de suprimento combinado com um escalar de dificuldade estrutural modelado a partir dos princípios de escassez termodinâmica do Bitcoin. Na migração para a Ethereum Mainnet, o suprimento gênese migrado foi inicializado em exatamente <strong>484.891,69691 cRECY</strong> (<code>484891696910000000000000</code> wei), mantendo paridade 1:1 com os saldos históricos circulantes.</p>
 
-                    <h3>3.1 Implantações de Contratos Inteligentes do Protocolo</h3>
+                    <h3>3.1 Contratos de Tokenomics, Certificados e Liquidez (Ethereum Mainnet)</h3>
                     <ul>
-                        <li><strong>Contrato do Token cRECY:</strong> <code>0x34C11A932853Ae24E845Ad4B633E3cEf91afE583</code></li>
-                        <li><strong>Contrato de Staking do cRECY:</strong> <code>0xCF1B48e2E7B4588b6673c4aB1855aFE71368e872</code></li>
-                        <li><strong>Contrato de Bloqueio do cRECY:</strong> <code>0x2b7d8711e26e78218791b85edb1ff4eff1a8bf54</code></li>
-                        <li><strong>Contrato do Certificado de Investimento:</strong> <code>0xd574e0605c20fc683fedbdd01ce745ff2c1a6f40</code></li>
+                        <li><strong>Token cRECY (ERC-20):</strong> <a class="contract-link" href="https://etherscan.io/token/0x48568467c9eD0898B006B7d24f628b78106B94A5" target="_blank" rel="noopener noreferrer">0x48568467c9eD0898B006B7d24f628b78106B94A5</a></li>
+                        <li><strong>Staking do cRECY:</strong> <a class="contract-link" href="https://etherscan.io/address/0x852441B3Fbdfb9f3d42999F703a62b873936926b" target="_blank" rel="noopener noreferrer">0x852441B3Fbdfb9f3d42999F703a62b873936926b</a></li>
+                        <li><strong>Bloqueio do cRECY (TimeLock):</strong> <a class="contract-link" href="https://etherscan.io/address/0xc31031bFe4DDF1d6F9e60FE0334AbB0f4198dB18" target="_blank" rel="noopener noreferrer">0xc31031bFe4DDF1d6F9e60FE0334AbB0f4198dB18</a></li>
+                        <li><strong>Recy Distribution:</strong> <a class="contract-link" href="https://etherscan.io/address/0x6626EE0125f8912FccEF31d12378694349751717" target="_blank" rel="noopener noreferrer">0x6626EE0125f8912FccEF31d12378694349751717</a></li>
+                        <li><strong>Certificado de Investimento de Impacto:</strong> <a class="contract-link" href="https://etherscan.io/address/0x7Ae647a60A5cB69a2075bfF44187d2cfe9cc0e70" target="_blank" rel="noopener noreferrer">0x7Ae647a60A5cB69a2075bfF44187d2cfe9cc0e70</a></li>
+                        <li><strong>Certificado de Rastreabilidade de Resíduos (Proxy):</strong> <a class="contract-link" href="https://etherscan.io/address/0xB7A182edFA8cAA2463D5abCAD1DFF4CC752645B6" target="_blank" rel="noopener noreferrer">0xB7A182edFA8cAA2463D5abCAD1DFF4CC752645B6</a></li>
+                        <li><strong>Certificado de Rastreabilidade de Resíduos (Implementação):</strong> <a class="contract-link" href="https://etherscan.io/address/0xcF3447DB09319E0FE378A1db2BFa74265345c4c5" target="_blank" rel="noopener noreferrer">0xcF3447DB09319E0FE378A1db2BFa74265345c4c5</a></li>
+                        <li><strong>Adaptador de Swap Uniswap V4 (RecyV4SwapAdapter):</strong> <a class="contract-link" href="https://etherscan.io/address/0xc5e9F929b0EFCBef5805F8e2B49D76A3c8A9249b" target="_blank" rel="noopener noreferrer">0xc5e9F929b0EFCBef5805F8e2B49D76A3c8A9249b</a></li>
+                        <li><strong>Mesa OTC Direta (DetrashDirectOTC):</strong> <a class="contract-link" href="https://etherscan.io/address/0x43D29dAA7ac44bcd762DbC7c683c57BfdbbCFC6B" target="_blank" rel="noopener noreferrer">0x43D29dAA7ac44bcd762DbC7c683c57BfdbbCFC6B</a></li>
+                    </ul>
+
+                    <h4>Multisigs de Governança e Infraestrutura Externa (Ethereum Mainnet)</h4>
+                    <ul>
+                        <li><strong>Safe de Governança do Protocolo:</strong> <a class="contract-link" href="https://etherscan.io/address/0xC33B034E3847CEeFa5989a13af5bd611daFF6D1b" target="_blank" rel="noopener noreferrer">0xC33B034E3847CEeFa5989a13af5bd611daFF6D1b</a></li>
+                        <li><strong>Safe de Tesouraria e Administração (Detrash):</strong> <a class="contract-link" href="https://etherscan.io/address/0x1EF3a7ba64f313a9b32A2B1519250E6C1D476356" target="_blank" rel="noopener noreferrer">0x1EF3a7ba64f313a9b32A2B1519250E6C1D476356</a></li>
+                        <li><strong>ID da Pool Uniswap V4 (cRECY / USDC):</strong> <code>0x7aa99be0e16ef96782c8f69dfffaec424392aa76bea3076dcfe147d375ad11f3</code></li>
+                        <li><strong>Uniswap V4 PoolManager:</strong> <a class="contract-link" href="https://etherscan.io/address/0x000000000004444c5dc75cB358380D2e3dE08A90" target="_blank" rel="noopener noreferrer">0x000000000004444c5dc75cB358380D2e3dE08A90</a></li>
+                        <li><strong>Uniswap V4 PositionManager:</strong> <a class="contract-link" href="https://etherscan.io/address/0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e" target="_blank" rel="noopener noreferrer">0xbD216513d74C8cf14cf4747E6AaA6420FF64ee9e</a></li>
+                        <li><strong>Permit2:</strong> <a class="contract-link" href="https://etherscan.io/address/0x000000000022D473030F116dDEE9F6B43aC78BA3" target="_blank" rel="noopener noreferrer">0x000000000022D473030F116dDEE9F6B43aC78BA3</a></li>
+                        <li><strong>Ativo de Liquidação (USDC):</strong> <a class="contract-link" href="https://etherscan.io/token/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48" target="_blank" rel="noopener noreferrer">0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48</a></li>
                     </ul>
 
                     <h3>3.2 Curvas de Dificuldade de Cunhagem (Hard-Cap)</h3>
@@ -442,7 +497,7 @@ Detrash               : 10%</code></pre>
                     </ul>
 
                     <h3>4.2 Captura Automatizada de Valor de Mercado</h3>
-                    <p>Toda a receita dos certificados flui através de um roteador automatizado. Na execução de uma compra, o contrato inteligente direciona o USDC para formadores de mercado (AMMs) na blockchain Celo para executar a compra a mercado (spot) de cRECY.</p>
+                    <p>Toda a receita dos certificados flui através do roteador automatizado (<code>RecyV4SwapAdapter</code>). Na execução de uma compra, o contrato inteligente direciona o USDC para a pool nativa <strong>Uniswap V4</strong> (cRECY/USDC) na Ethereum Mainnet para executar a compra a mercado (spot) de cRECY.</p>
                     <pre><code>Tokens Comprados = Preço do Certificado (USDC) / Preço de Mercado do cRECY</code></pre>
 
                     <hr>
@@ -486,7 +541,7 @@ Detrash               : 10%</code></pre>
 Tier 1 [Seed]   : Trilha Líquida (30 Dias)
 Tier 2 [Growth] : Trilha de Marcos (90 Dias)
 Tier 3 [Impact] : Certificado de 730 Dias</code></pre>
-                    
+
                     <ol>
                         <li><strong>Estabilização pelo Bloqueio de Oferta:</strong> O bloqueio de longa duração remove frações significativas do pool circulante do mercado aberto.</li>
                     </ol>
@@ -495,83 +550,90 @@ Tier 3 [Impact] : Certificado de 730 Dias</code></pre>
         </div>
     </div>
 
+    <!-- Footer -->
     <footer class="bg-slate-100 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 mt-20 text-slate-500 dark:text-slate-400 py-12 transition-colors">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
-            <div class="flex items-center">
+            <div class="flex items-center gap-4">
                 <a href="https://c.recy.life" class="block cursor-pointer hover:scale-105 hover:opacity-90 transition-all duration-200" aria-label="Visit Recy Network">
                     <img src="https://github.com/detrash.png" alt="Recy Logo" class="w-10 h-10 rounded-lg shadow-sm">
                 </a>
+                <div class="flex gap-4 text-sm font-medium">
+                    <a href="index.html" class="hover:text-brand-600 dark:hover:text-brand-400 transition-colors" id="f-nav-wpp">Whitepaper</a>
+                    <a href="testnet.html" class="hover:text-brand-600 dark:hover:text-brand-400 transition-colors" id="f-nav-testnet">Testnet</a>
+                    <a href="former-versions.html" class="hover:text-brand-600 dark:hover:text-brand-400 transition-colors" id="f-nav-former">Former Versions</a>
+                </div>
             </div>
             <p class="text-sm">Built by Detrash. Designed for the planet.</p>
             <div class="flex gap-4">
-                <a href="#" class="hover:text-slate-900 dark:hover:text-white transition-colors"><i class="fa-brands fa-github text-xl"></i></a>
-                <a href="#" class="hover:text-slate-900 dark:hover:text-white transition-colors"><i class="fa-brands fa-twitter text-xl"></i></a>
-                <a href="#" class="hover:text-slate-900 dark:hover:text-white transition-colors"><i class="fa-brands fa-discord text-xl"></i></a>
+                <a href="https://github.com/detrash" target="_blank" rel="noopener noreferrer" class="hover:text-slate-900 dark:hover:text-white transition-colors" aria-label="GitHub"><i class="fa-brands fa-github text-xl"></i></a>
+                <a href="https://x.com/detrashglobal" target="_blank" rel="noopener noreferrer" class="hover:text-slate-900 dark:hover:text-white transition-colors" aria-label="X / Twitter"><i class="fa-brands fa-twitter text-xl"></i></a>
             </div>
         </div>
     </footer>
 
     <script>
-        // Dark Mode Logic
         function toggleTheme() {
             document.documentElement.classList.toggle('dark');
-            if (document.documentElement.classList.contains('dark')) {
-                localStorage.theme = 'dark';
-            } else {
-                localStorage.theme = 'light';
-            }
+            localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
         }
-
-        // Language Toggle Logic
-        const contentEn = document.getElementById('content-en');
-        const contentPt = document.getElementById('content-pt');
-        const btnEn = document.getElementById('btn-en');
-        const btnPt = document.getElementById('btn-pt');
-        
-        // UI Elements for localization
-        const heroBadge = document.getElementById('hero-badge');
-        const heroTitle = document.getElementById('hero-title');
-        const heroCta = document.getElementById('hero-cta');
-        const docTitle = document.getElementById('doc-title');
 
         const strings = {
             en: {
-                badge: "Protocol Version V2.5",
-                title: 'RECY Whitepaper',
+                badge: "Protocol Version V2.5 • Ethereum Mainnet",
+                title: "RECY Whitepaper",
                 cta: 'Read Whitepaper <i class="fa-solid fa-arrow-down"></i>',
-                doc: "Recy Network Whitepaper"
+                testnetCta: '<i class="fa-solid fa-flask text-brand-500"></i> Celo Sepolia Testnet',
+                formerCta: '<i class="fa-solid fa-clock-rotate-left text-slate-400"></i> Former Versions',
+                doc: "Recy Network Whitepaper",
+                docSub: "Ethereum Mainnet (Chain ID: 1) • V2.5",
+                status: "Live on Ethereum",
+                navWpp: "Whitepaper",
+                navTestnet: "Testnet",
+                navFormer: "Former Versions"
             },
             pt: {
-                badge: "Versão do Protocolo V2.5",
-                title: 'RECY Whitepaper',
+                badge: "Versão do Protocolo V2.5 • Ethereum Mainnet",
+                title: "RECY Whitepaper",
                 cta: 'Ler Whitepaper <i class="fa-solid fa-arrow-down"></i>',
-                doc: "Whitepaper da Rede Recy"
+                testnetCta: '<i class="fa-solid fa-flask text-brand-500"></i> Testnet Celo Sepolia',
+                formerCta: '<i class="fa-solid fa-clock-rotate-left text-slate-400"></i> Versões Anteriores',
+                doc: "Whitepaper da Rede Recy",
+                docSub: "Ethereum Mainnet (Chain ID: 1) • V2.5",
+                status: "Ativo na Ethereum",
+                navWpp: "Whitepaper",
+                navTestnet: "Testnet",
+                navFormer: "Versões Anteriores"
             }
         };
 
         function setLanguage(lang) {
-            // Update Active Buttons styles with Dark Mode compatibility
-            const activeClass = "px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 bg-white dark:bg-slate-700 shadow-sm text-brand-600 dark:text-brand-400";
-            const inactiveClass = "px-4 py-1.5 rounded-full text-sm font-semibold transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-700/50";
+            localStorage.lang = lang;
+            const activeClass = "px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 bg-white dark:bg-slate-700 shadow-sm text-brand-600 dark:text-brand-400";
+            const inactiveClass = "px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200";
 
-            if(lang === 'en') {
-                btnEn.className = activeClass;
-                btnPt.className = inactiveClass;
-                contentEn.classList.remove('hidden');
-                contentPt.classList.add('hidden');
-            } else {
-                btnPt.className = activeClass;
-                btnEn.className = inactiveClass;
-                contentPt.classList.remove('hidden');
-                contentEn.classList.add('hidden');
-            }
+            const isEn = lang === 'en';
+            document.getElementById('btn-en').className = isEn ? activeClass : inactiveClass;
+            document.getElementById('btn-pt').className = isEn ? inactiveClass : activeClass;
+            document.getElementById('content-en').classList.toggle('hidden', !isEn);
+            document.getElementById('content-pt').classList.toggle('hidden', isEn);
 
-            // Update UI Strings
-            heroBadge.innerHTML = strings[lang].badge;
-            heroTitle.innerHTML = strings[lang].title;
-            heroCta.innerHTML = strings[lang].cta;
-            docTitle.innerHTML = strings[lang].doc;
+            const t = strings[lang];
+            document.getElementById('hero-badge').textContent = t.badge;
+            document.getElementById('hero-title').textContent = t.title;
+            document.getElementById('hero-cta').innerHTML = t.cta;
+            document.getElementById('hero-testnet-cta').innerHTML = t.testnetCta;
+            document.getElementById('hero-former-cta').innerHTML = t.formerCta;
+            document.getElementById('doc-title').textContent = t.doc;
+            document.getElementById('doc-subtitle').textContent = t.docSub;
+            document.getElementById('status-badge').textContent = t.status;
+
+            ['nav-wpp', 'm-nav-wpp', 'f-nav-wpp'].forEach(id => document.getElementById(id).textContent = t.navWpp);
+            ['nav-testnet', 'm-nav-testnet', 'f-nav-testnet'].forEach(id => document.getElementById(id).textContent = t.navTestnet);
+            ['nav-former', 'm-nav-former', 'f-nav-former'].forEach(id => document.getElementById(id).textContent = t.navFormer);
         }
+
+        // Initialize persisted language
+        setLanguage(localStorage.lang === 'pt' ? 'pt' : 'en');
     </script>
 </body>
 </html>

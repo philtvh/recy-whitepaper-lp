@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recy Network | Former Versions &amp; Legacy Contracts</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400;1,700&family=Red+Hat+Display:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Red Hat Display"', 'sans-serif'],
+                        title: ['"Atkinson Hyperlegible"', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#0f3823',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        .dark ::-webkit-scrollbar-thumb { background: #475569; }
+    </style>
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+        }
+    </script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-200 font-sans antialiased transition-colors duration-300">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 transition-all duration-300 bg-white/85 dark:bg-slate-900/85 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16 gap-4">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="https://c.recy.life" class="block cursor-pointer hover:scale-105 hover:opacity-90 transition-all duration-200" aria-label="Visit Recy Network">
+                        <img src="Assets/logo.png" alt="cRECY Logo" class="h-10 w-auto rounded-lg shadow-sm">
+                    </a>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-1 bg-slate-100/80 dark:bg-slate-800/80 p-1 rounded-full border border-slate-200 dark:border-slate-700">
+                    <a href="index.html" id="nav-wpp" class="px-4 py-1.5 rounded-full text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all">Whitepaper</a>
+                    <a href="testnet.html" id="nav-testnet" class="px-4 py-1.5 rounded-full text-sm font-semibold text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white transition-all">Testnet</a>
+                    <a href="former-versions.html" id="nav-former" class="px-4 py-1.5 rounded-full text-sm font-semibold bg-white dark:bg-slate-700 text-brand-600 dark:text-brand-400 shadow-sm transition-all">Former Versions</a>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <button onclick="toggleTheme()" class="w-9 h-9 rounded-full flex items-center justify-center text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" aria-label="Toggle Dark Mode">
+                        <i class="fa-solid fa-moon dark:hidden"></i>
+                        <i class="fa-solid fa-sun hidden dark:block"></i>
+                    </button>
+                    <div class="flex items-center space-x-1 bg-slate-100 dark:bg-slate-800 p-1 rounded-full border border-slate-200 dark:border-slate-700">
+                        <button onclick="setLanguage('en')" id="btn-en" class="px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 bg-white dark:bg-slate-700 shadow-sm text-brand-600 dark:text-brand-400">EN</button>
+                        <button onclick="setLanguage('pt')" id="btn-pt" class="px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200">PT-BR</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex md:hidden justify-center gap-2 pb-3">
+                <a href="index.html" id="m-nav-wpp" class="px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">Whitepaper</a>
+                <a href="testnet.html" id="m-nav-testnet" class="px-3 py-1 rounded-full text-xs font-semibold bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">Testnet</a>
+                <a href="former-versions.html" id="m-nav-former" class="px-3 py-1 rounded-full text-xs font-semibold bg-brand-600 text-white">Former Versions</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <div class="relative pt-32 pb-8 sm:pt-36 sm:pb-12">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-200/70 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-300 text-sm font-medium mb-6">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+                <span id="hero-badge">Historical Registry • Deprecated Deployments</span>
+            </div>
+            <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-slate-900 dark:text-white mb-4 font-title" id="hero-title">
+                Former Versions Archive
+            </h1>
+            <p class="max-w-2xl mx-auto text-slate-600 dark:text-slate-400 text-base sm:text-lg" id="hero-desc">
+                Complete historical record of retired Recy Network and DeTrash smart contracts across Celo Mainnet, Polygon, BNB Smart Chain (BSC), and Hathor Network prior to the migration to Ethereum Mainnet.
+            </p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 space-y-8">
+
+        <!-- Deprecation Warning Banner -->
+        <div class="rounded-2xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900/60 p-5 sm:p-6 flex items-start gap-4">
+            <i class="fa-solid fa-triangle-exclamation text-rose-500 text-xl mt-0.5 flex-shrink-0"></i>
+            <div class="text-sm text-rose-900 dark:text-rose-200">
+                <p class="font-bold font-title text-base mb-1" id="warn-title">Deprecated Legacy Contracts — Do Not Deposit Funds</p>
+                <p id="warn-body">
+                    The contracts listed on this page belong to superseded protocol versions and are published strictly for transparency, on-chain auditability, and historical verification. Active production contracts are live on <a href="index.html" class="underline font-semibold">Ethereum Mainnet</a>.
+                </p>
+            </div>
+        </div>
+
+        <!-- Dynamic Sections Container -->
+        <div id="legacy-sections" class="space-y-8"></div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-100 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 mt-12 text-slate-500 dark:text-slate-400 py-12 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center gap-4">
+                <a href="https://c.recy.life" class="block cursor-pointer hover:scale-105 hover:opacity-90 transition-all duration-200" aria-label="Visit Recy Network">
+                    <img src="https://github.com/detrash.png" alt="Recy Logo" class="w-10 h-10 rounded-lg shadow-sm">
+                </a>
+                <div class="flex gap-4 text-sm font-medium">
+                    <a href="index.html" class="hover:text-brand-600 dark:hover:text-brand-400 transition-colors" id="f-nav-wpp">Whitepaper</a>
+                    <a href="testnet.html" class="hover:text-brand-600 dark:hover:text-brand-400 transition-colors" id="f-nav-testnet">Testnet</a>
+                    <a href="former-versions.html" class="hover:text-brand-600 dark:hover:text-brand-400 transition-colors" id="f-nav-former">Former Versions</a>
+                </div>
+            </div>
+            <p class="text-sm">Built by Detrash. Designed for the planet.</p>
+            <div class="flex gap-4">
+                <a href="https://github.com/detrash" target="_blank" rel="noopener noreferrer" class="hover:text-slate-900 dark:hover:text-white transition-colors" aria-label="GitHub"><i class="fa-brands fa-github text-xl"></i></a>
+                <a href="https://x.com/detrashg_org" target="_blank" rel="noopener noreferrer" class="hover:text-slate-900 dark:hover:text-white transition-colors" aria-label="X / Twitter"><i class="fa-brands fa-twitter text-xl"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            localStorage.theme = document.documentElement.classList.contains('dark') ? 'dark' : 'light';
+        }
+
+        const legacyGroups = [
+            {
+                id: "celo",
+                titleEn: "Celo Mainnet (Chain ID: 42220)",
+                titlePt: "Celo Mainnet (Chain ID: 42220)",
+                subtitleEn: "Legacy V2 / V2.5 & V8.5 deployments — Migrated to Ethereum Mainnet",
+                subtitlePt: "Implantações legadas V2 / V2.5 e V8.5 — Migradas para a Ethereum Mainnet",
+                badgeEn: "Migrated to Ethereum",
+                badgePt: "Migrado para Ethereum",
+                contracts: [
+                    { name: "cRECY Token (Legacy Celo)", roleEn: "ERC-20 Token", rolePt: "Token ERC-20", address: "0x34C11A932853Ae24E845Ad4B633E3cEf91afE583", explorer: "Celoscan", url: "https://celoscan.io/token/0x34C11A932853Ae24E845Ad4B633E3cEf91afE583" },
+                    { name: "cRECY Staking", roleEn: "Staking Engine", rolePt: "Motor de Staking", address: "0xCF1B48e2E7B4588b6673c4aB1855aFE71368e872", explorer: "Celoscan", url: "https://celoscan.io/address/0xCF1B48e2E7B4588b6673c4aB1855aFE71368e872" },
+                    { name: "cRECY Locking (TimeLock)", roleEn: "2-Year Certificate Lock", rolePt: "Bloqueio de 2 Anos", address: "0x2b7d8711e26e78218791b85edb1ff4eff1a8bf54", explorer: "Celoscan", url: "https://celoscan.io/address/0x2b7d8711e26e78218791b85edb1ff4eff1a8bf54" },
+                    { name: "Impact Investment Certificate (Recy Certificate)", roleEn: "ESG / Impact NFT", rolePt: "Certificado ESG / Impacto", address: "0xd574e0605c20fc683fedbdd01ce745ff2c1a6f40", explorer: "Celoscan", url: "https://celoscan.io/address/0xd574e0605c20fc683fedbdd01ce745ff2c1a6f40" },
+                    { name: "Recy Report Factory", roleEn: "Proxy Factory", rolePt: "Fábrica de Proxies", address: "0x4423f3A81432F9bF43178AB60336F82DbB3171DA", explorer: "Celoscan", url: "https://celoscan.io/address/0x4423f3A81432F9bF43178AB60336F82DbB3171DA" },
+                    { name: "Report Attributes", roleEn: "Report Metadata", rolePt: "Metadados de Relatório", address: "0xFF4b9bA19F1973A22F8D2847B85A26bF0878d5CA", explorer: "Celoscan", url: "https://celoscan.io/address/0xFF4b9bA19F1973A22F8D2847B85A26bF0878d5CA" },
+                    { name: "Recy Report SVG", roleEn: "On-Chain SVG Renderer", rolePt: "Renderizador SVG On-Chain", address: "0xca5F41D24E7eCb633A162F15A0BcA0d8db4E0A75", explorer: "Celoscan", url: "https://celoscan.io/address/0xca5F41D24E7eCb633A162F15A0BcA0d8db4E0A75" },
+                    { name: "Recy Report Data", roleEn: "Report Storage", rolePt: "Armazenamento de Relatórios", address: "0x62bAd9C9ca3672dAc340747E1F7958CEfEa3b27D", explorer: "Celoscan", url: "https://celoscan.io/address/0x62bAd9C9ca3672dAc340747E1F7958CEfEa3b27D" },
+                    { name: "Recy Report Implementation", roleEn: "Report Logic", rolePt: "Lógica de Relatórios", address: "0xd9C75aa9e7226B05ed52263f60B37820Ef9129Be", explorer: "Celoscan", url: "https://celoscan.io/address/0xd9C75aa9e7226B05ed52263f60B37820Ef9129Be" }
+                ]
+            },
+            {
+                id: "polygon",
+                titleEn: "Polygon PoS (Chain ID: 137)",
+                titlePt: "Polygon PoS (Chain ID: 137)",
+                subtitleEn: "Legacy Recy Reports deployment (Whitepaper V8.5)",
+                subtitlePt: "Implantação legada dos Relatórios Recy (Whitepaper V8.5)",
+                badgeEn: "Legacy V8.5",
+                badgePt: "Legado V8.5",
+                contracts: [
+                    { name: "Recy Reports Contract", roleEn: "Legacy Waste Reports", rolePt: "Relatórios Recy Legados", address: "0xbc68c4ec4182e1d2c73b5e58bd92be9871db2230", explorer: "Polygonscan", url: "https://polygonscan.com/token/0xbc68c4ec4182e1d2c73b5e58bd92be9871db2230" }
+                ]
+            },
+            {
+                id: "bsc",
+                titleEn: "BNB Smart Chain / BSC (Chain ID: 56)",
+                titlePt: "BNB Smart Chain / BSC (Chain ID: 56)",
+                subtitleEn: "Early cRECY / RECY token deployment (Whitepaper V3)",
+                subtitlePt: "Implantação inicial do token cRECY / RECY (Whitepaper V3)",
+                badgeEn: "Legacy V3",
+                badgePt: "Legado V3",
+                contracts: [
+                    { name: "cRECY / RECY Token (BSC)", roleEn: "BEP-20 Legacy Token", rolePt: "Token Legado BEP-20", address: "0x799C8f55950a768646818828EcD7B552A1a4B062", explorer: "BscScan", url: "https://bscscan.com/token/0x799C8f55950a768646818828EcD7B552A1a4B062" }
+                ]
+            },
+            {
+                id: "hathor",
+                titleEn: "Hathor Network",
+                titlePt: "Rede Hathor",
+                subtitleEn: "Genesis cRECY / RECY custom token UID (Whitepaper V3)",
+                subtitlePt: "UID gênese do token cRECY / RECY (Whitepaper V3)",
+                badgeEn: "Legacy V3",
+                badgePt: "Legado V3",
+                contracts: [
+                    { name: "cRECY / RECY Token (Hathor)", roleEn: "Hathor Token UID", rolePt: "UID de Token Hathor", address: "00000000711a212457b938ceebfdcc8f0faad56476bfa9c48c1476b9634d3151", explorer: "Hathor Explorer", url: "https://explorer.hathor.network/token_detail/00000000711a212457b938ceebfdcc8f0faad56476bfa9c48c1476b9634d3151" }
+                ]
+            }
+        ];
+
+        function copyAddr(btn, addr) {
+            navigator.clipboard.writeText(addr).then(() => {
+                const icon = btn.querySelector('i');
+                icon.className = 'fa-solid fa-check text-brand-500';
+                setTimeout(() => { icon.className = 'fa-regular fa-copy'; }, 1500);
+            });
+        }
+
+        function renderLegacy(lang) {
+            const isPt = lang === 'pt';
+            const container = document.getElementById('legacy-sections');
+            container.innerHTML = legacyGroups.map(group => `
+                <section class="bg-white dark:bg-slate-900 rounded-2xl shadow-lg shadow-slate-200/40 dark:shadow-none border border-slate-200/80 dark:border-slate-800 overflow-hidden">
+                    <div class="px-6 sm:px-8 py-5 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-800/40 flex flex-wrap items-center justify-between gap-3">
+                        <div>
+                            <h2 class="text-xl font-bold font-title text-slate-900 dark:text-white">${isPt ? group.titlePt : group.titleEn}</h2>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">${isPt ? group.subtitlePt : group.subtitleEn}</p>
+                        </div>
+                        <span class="px-3 py-1 rounded-full text-xs font-semibold bg-slate-200/80 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-300/60 dark:border-slate-700">
+                            ${isPt ? group.badgePt : group.badgeEn}
+                        </span>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left border-collapse">
+                            <thead>
+                                <tr class="border-b border-slate-200 dark:border-slate-800 text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400 bg-slate-50/80 dark:bg-slate-900/60">
+                                    <th class="py-3 px-6 font-semibold">${isPt ? 'Contrato / Ativo' : 'Contract / Asset'}</th>
+                                    <th class="py-3 px-4 font-semibold">${isPt ? 'Função' : 'Role'}</th>
+                                    <th class="py-3 px-4 font-semibold">${isPt ? 'Endereço / UID' : 'Address / UID'}</th>
+                                    <th class="py-3 px-6 font-semibold text-right">${isPt ? 'Explorador' : 'Explorer'}</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800 text-sm">
+                                ${group.contracts.map(c => `
+                                    <tr class="hover:bg-slate-50/70 dark:hover:bg-slate-800/40 transition-colors">
+                                        <td class="py-4 px-6 font-semibold text-slate-900 dark:text-white whitespace-nowrap">${c.name}</td>
+                                        <td class="py-4 px-4 whitespace-nowrap">
+                                            <span class="inline-flex px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">${isPt ? c.rolePt : c.roleEn}</span>
+                                        </td>
+                                        <td class="py-4 px-4">
+                                            <div class="flex items-center gap-2">
+                                                <code class="font-mono text-xs text-slate-700 dark:text-slate-300 break-all">${c.address}</code>
+                                                <button onclick="copyAddr(this, '${c.address}')" class="p-1.5 rounded-md text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors flex-shrink-0" title="Copy">
+                                                    <i class="fa-regular fa-copy"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                        <td class="py-4 px-6 text-right whitespace-nowrap">
+                                            <a href="${c.url}" target="_blank" rel="noopener noreferrer" class="text-brand-600 dark:text-brand-400 hover:underline font-semibold text-xs">
+                                                ${c.explorer} <i class="fa-solid fa-arrow-up-right-from-square ml-0.5"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            `).join('');
+        }
+
+        const strings = {
+            en: {
+                badge: "Historical Registry • Deprecated Deployments",
+                title: "Former Versions Archive",
+                desc: "Complete historical record of retired Recy Network and DeTrash smart contracts across Celo Mainnet, Polygon, BNB Smart Chain (BSC), and Hathor Network prior to the migration to Ethereum Mainnet.",
+                warnTitle: "Deprecated Legacy Contracts — Do Not Deposit Funds",
+                warnBody: 'The contracts listed on this page belong to superseded protocol versions and are published strictly for transparency, on-chain auditability, and historical verification. Active production contracts are live on <a href="index.html" class="underline font-semibold">Ethereum Mainnet</a>.',
+                navWpp: "Whitepaper",
+                navTestnet: "Testnet",
+                navFormer: "Former Versions"
+            },
+            pt: {
+                badge: "Registro Histórico • Implantações Descontinuadas",
+                title: "Arquivo de Versões Anteriores",
+                desc: "Registro histórico completo dos contratos inteligentes descontinuados da Rede Recy e DeTrash na Celo Mainnet, Polygon, BNB Smart Chain (BSC) e Rede Hathor antes da migração para a Ethereum Mainnet.",
+                warnTitle: "Contratos Legados Descontinuados — Não Envie Fundos",
+                warnBody: 'Os contratos listados nesta página pertencem a versões anteriores do protocolo e são mantidos estritamente para transparência, auditabilidade on-chain e verificação histórica. Os contratos ativos de produção operam na <a href="index.html" class="underline font-semibold">Ethereum Mainnet</a>.',
+                navWpp: "Whitepaper",
+                navTestnet: "Testnet",
+                navFormer: "Versões Anteriores"
+            }
+        };
+
+        function setLanguage(lang) {
+            localStorage.lang = lang;
+            const activeClass = "px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 bg-white dark:bg-slate-700 shadow-sm text-brand-600 dark:text-brand-400";
+            const inactiveClass = "px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-semibold transition-all duration-200 text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200";
+            const isEn = lang === 'en';
+            document.getElementById('btn-en').className = isEn ? activeClass : inactiveClass;
+            document.getElementById('btn-pt').className = isEn ? inactiveClass : activeClass;
+
+            const t = strings[lang];
+            document.getElementById('hero-badge').textContent = t.badge;
+            document.getElementById('hero-title').textContent = t.title;
+            document.getElementById('hero-desc').textContent = t.desc;
+            document.getElementById('warn-title').textContent = t.warnTitle;
+            document.getElementById('warn-body').innerHTML = t.warnBody;
+
+            ['nav-wpp', 'm-nav-wpp', 'f-nav-wpp'].forEach(id => document.getElementById(id).textContent = t.navWpp);
+            ['nav-testnet', 'm-nav-testnet', 'f-nav-testnet'].forEach(id => document.getElementById(id).textContent = t.navTestnet);
+            ['nav-former', 'm-nav-former', 'f-nav-former'].forEach(id => document.getElementById(id).textContent = t.navFormer);
+
+            renderLegacy(lang);
+        }
+
+        setLanguage(localStorage.lang === 'pt' ? 'pt' : 'en');
+    </script>
+</body>
+</html>
